@@ -1,11 +1,13 @@
 package cst438flights.domain;
 
+import java.sql.Date;
+
 public class FlightInfo {
 
     long id;
     String departureAirport;
     String arrivalAirport;
-    String departureDate;
+    Date departureDate;
 
     public FlightInfo() {
         this.id = 0;
@@ -15,13 +17,13 @@ public class FlightInfo {
     }
 
     public FlightInfo(Flight flight) {
-        this.id = flight.getFlight_ID();
+        this.id = flight.getFlightID();
         this.departureAirport = flight.getDepartureAirport();
         this.arrivalAirport = flight.getArrivalAirport();
         this.departureDate = flight.getDepartureDate();
     }
 
-    public FlightInfo(long id, String departureAirport, String arrivalAirport, String departureDate) {
+    public FlightInfo(long id, String departureAirport, String arrivalAirport, Date departureDate) {
         super();
         this.id = id;
         this.departureAirport = departureAirport;
@@ -53,11 +55,11 @@ public class FlightInfo {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public String getDepartureDate() {
+    public Date getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
+    public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
     }
 

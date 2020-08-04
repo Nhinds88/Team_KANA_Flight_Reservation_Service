@@ -10,7 +10,7 @@ public class Reservation {
 
     @Id
     private long reservation_ID;
-    private long customer_ID;
+    private long customerID;
     private long departureFlight_ID;
     private String seatClass;
     private int numPassengers;
@@ -20,10 +20,10 @@ public class Reservation {
 
     public Reservation() { this(0,0,0, "first", 1, "no", 300, "kana"); }
 
-    public Reservation(long reservation_ID, long customer_ID, long departureFlight_ID, String seatClass, int numPassengers, String priorityBoarding, float totalPrice, String reservationOrigin) {
+    public Reservation(long reservation_ID, long customerID, long departureFlight_ID, String seatClass, int numPassengers, String priorityBoarding, float totalPrice, String reservationOrigin) {
         super();
         this.reservation_ID = reservation_ID;
-        this.customer_ID = customer_ID;
+        this.customerID = customerID;
         this.departureFlight_ID = departureFlight_ID;
         this.seatClass = seatClass;
         this.numPassengers = numPassengers;
@@ -40,12 +40,12 @@ public class Reservation {
         this.reservation_ID = reservation_ID;
     }
 
-    public long getCustomer_ID() {
-        return customer_ID;
+    public long getCustomerID() {
+        return customerID;
     }
 
-    public void setCustomer_ID(long customer_ID) {
-        this.customer_ID = customer_ID;
+    public void setCustomerID(long customer_ID) {
+        this.customerID = customer_ID;
     }
 
     public long getDepartureFlight_ID() {
@@ -98,6 +98,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation [reservation_ID=" + reservation_ID + ", customer_ID=" + customer_ID + ", departureFlight_ID=" + departureFlight_ID + ", seatClass=" + seatClass + ", numPassengers=" + numPassengers + ", priorityBoarding=" + priorityBoarding + ", totalPrice=" + totalPrice + ", reservationOrigin=" + reservationOrigin +"]";
+        return "Reservation [reservation_ID=" + reservation_ID + ", customer_ID=" + customerID + ", departureFlight_ID=" + departureFlight_ID + ", seatClass=" + seatClass + ", numPassengers=" + numPassengers + ", priorityBoarding=" + priorityBoarding + ", totalPrice=" + totalPrice + ", reservationOrigin=" + reservationOrigin +"]";
     }
 }

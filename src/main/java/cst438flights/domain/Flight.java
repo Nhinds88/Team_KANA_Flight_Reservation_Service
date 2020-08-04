@@ -2,36 +2,37 @@ package cst438flights.domain;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Entity
 @Table(name="flight")
 public class Flight {
 
     @Id
-    private long flight_ID;
+    private long flightID;
     private String departureAirport;
     private String arrivalAirport;
-    private String departureDate;
+    private Date departureDate;
 
     public Flight() {
-        this(0, "departureAirport", "arrivalAirport", "1/1/20");
+        this(0, "departureAirport", "arrivalAirport", new Date(2323223232L));
     }
 
-    public Flight(long flight_ID, String departureAirport, String arrivalAirport, String departureDate) {
+    public Flight(long flightID, String departureAirport, String arrivalAirport, Date departureDate) {
         super();
-        this.flight_ID = flight_ID;
+        this.flightID = flightID;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
     }
 
-    public long getFlight_ID() {
-        return flight_ID;
+    public long getFlightID() {
+        return flightID;
     }
 
-    public void setFlight_ID(long flight_ID) {
-        this.flight_ID = flight_ID;
+    public void setFlightID(long flight_ID) {
+        this.flightID = flight_ID;
     }
 
     public String getDepartureAirport() {
@@ -50,16 +51,16 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public String getDepartureDate() {
+    public Date getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
+    public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
     }
 
     @Override
     public String toString() {
-        return "Flight [flight_ID=" + flight_ID + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + "]";
+        return "Flight [flight_ID=" + flightID + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + "]";
     }
 }
