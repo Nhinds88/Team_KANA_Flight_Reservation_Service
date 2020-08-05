@@ -10,13 +10,15 @@
             <th>Flight ID--</th>
             <th>Departure Airport--</th>
             <th>Arrival Airport--</th>
-            <th>Departure Date</th>
+            <th>Departure Date--</th>
+            <th>Status</th>
         </tr>
         <tr th:each="flight : ${flights}">
             <td th:text="${flight.id}"></td>
             <td th:text="${flight.departureAirport}"></td>
             <td th:text="${flight.arrivalAirport}"></td>
             <td th:text="${flight.departureDate}"></td>
+            <td th:text="${flight.status}"></td>
         </tr>
     </table>
 </body>

@@ -34,7 +34,7 @@ public class CustomerService {
             Reservation r = reservations.get(i);
             Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
-            FlightInfo tempFlight = new FlightInfo(previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate());
+            FlightInfo tempFlight = new FlightInfo(previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus());
             flights.add(tempFlight);
             System.out.println("Flight Departure Airport (FlightInfo) " + tempFlight.getDepartureAirport());
         }

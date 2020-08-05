@@ -8,12 +8,14 @@ public class FlightInfo {
     String departureAirport;
     String arrivalAirport;
     Date departureDate;
+    String status;
 
     public FlightInfo() {
         this.id = 0;
         this.departureAirport = null;
         this.arrivalAirport = null;
         this.departureDate = null;
+        this.status = null;
     }
 
     public FlightInfo(Flight flight) {
@@ -21,14 +23,16 @@ public class FlightInfo {
         this.departureAirport = flight.getDepartureairport();
         this.arrivalAirport = flight.getArrivalairport();
         this.departureDate = flight.getDeparturedate();
+        this.status = flight.getStatus();
     }
 
-    public FlightInfo(long id, String departureAirport, String arrivalAirport, Date departureDate) {
+    public FlightInfo(long id, String departureAirport, String arrivalAirport, Date departureDate, String status) {
         super();
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
+        this.status = status;
     }
 
     public long getId() {
@@ -63,8 +67,16 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Flight [id=" + id + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + "]";
+        return "Flight [id=" + id + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + ", status=" + status + "]";
     }
 }

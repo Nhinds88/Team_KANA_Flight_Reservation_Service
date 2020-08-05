@@ -32,7 +32,7 @@ public class FlightService {
 
         Flight f = flights.get(0);
 
-        return new FlightInfo(f.getFlightid(), f.getDepartureairport(), f.getArrivalairport(), f.getDeparturedate());
+        return new FlightInfo(f.getFlightid(), f.getDepartureairport(), f.getArrivalairport(), f.getDeparturedate(), f.getStatus());
     }
 
     public void requestReservation(String departureAirport, String arrivalAirport, String departureDate) {

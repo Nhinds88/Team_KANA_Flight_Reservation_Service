@@ -17,17 +17,20 @@ public class Flight {
     private String arrivalairport;
     @Column(name="departuredate")
     private Date departuredate;
+    @Column(name="status")
+    private String status;
 
     public Flight() {
-        this(0, "departureAirport", "arrivalAirport", new Date(2323223232L));
+        this(0, "departureAirport", "arrivalAirport", new Date(2323223232L), "on time");
     }
 
-    public Flight(Integer flightid, String departureairport, String arrivalairport, Date departuredate) {
+    public Flight(Integer flightid, String departureairport, String arrivalairport, Date departuredate, String status) {
         super();
         this.flightid = flightid;
         this.departureairport = departureairport;
         this.arrivalairport = arrivalairport;
         this.departuredate = departuredate;
+        this.status = status;
     }
 
     public Integer getFlightid() {
@@ -62,8 +65,16 @@ public class Flight {
         this.departuredate = departureDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Flight [flight_ID=" + flightid + ", departureAirport=" + departureairport + ", arrivalAirport=" + arrivalairport + ", departureDate=" + departuredate + "]";
+        return "Flight [flight_ID=" + flightid + ", departureAirport=" + departureairport + ", arrivalAirport=" + arrivalairport + ", departureDate=" + departuredate + ", status=" + status + "]";
     }
 }
