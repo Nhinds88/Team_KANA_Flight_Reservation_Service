@@ -21,9 +21,10 @@ public class CustomerController {
     public String customerHistory(
             @RequestParam("email") String email,
             Model model) {
-        List<FlightInfo> flights = customerService.getPreviousFlights(email);
+
+        Iterable<FlightInfo> flights = customerService.getPreviousFlights(email);
         model.addAttribute("flights", flights);
 
-        return "previous_flight_list";
+        return "previous_flights";
     }
 }

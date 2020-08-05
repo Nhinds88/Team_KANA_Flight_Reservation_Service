@@ -1,5 +1,6 @@
 package cst438flights.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,46 +10,51 @@ import javax.persistence.Table;
 public class Customer {
 
     @Id
-    private long customer_ID;
-    private String lastName;
-    private String firstName;
+    @Column(name="customerid")
+    private Integer customerid;
+    @Column(name="lastname")
+    private String lastname;
+    @Column(name="firstname")
+    private String firstname;
+    @Column(name="email")
     private String email;
+    @Column(name="password")
     private String password;
 
     public Customer() { this(0, "Skywalker", "Luke", "jedi@lightside.com", "force"); }
 
 
-    public Customer(long customer_ID, String lastname, String firstName, String email, String password) {
+    public Customer(Integer customerid, String lastname, String firstname, String email, String password) {
         super();
-        this.customer_ID = customer_ID;
-        this.lastName = lastname;
-        this.firstName = firstName;
+        this.customerid = customerid;
+        this.lastname = lastname;
+        this.firstname = firstname;
         this.email = email;
         this.password = password;
     }
 
-    public long getCustomer_ID() {
-        return customer_ID;
+    public Integer getCustomerid() {
+        return customerid;
     }
 
-    public void setCustomer_ID(long customer_ID) {
-        this.customer_ID = customer_ID;
+    public void setCustomer_ID(Integer customerid) {
+        this.customerid = customerid;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 
     public String getEmail() {
@@ -69,6 +75,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer [customer_ID=" + customer_ID + ", lastName=" + lastName + ", firstName=" + firstName + ", email=" + email + ", password=" + password +"]";
+        return "Customer [customerid=" + customerid + ", lastName=" + lastname + ", firstName=" + firstname + ", email=" + email + ", password=" + password +"]";
     }
 }

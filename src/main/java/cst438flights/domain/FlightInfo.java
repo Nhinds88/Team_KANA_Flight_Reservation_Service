@@ -17,10 +17,10 @@ public class FlightInfo {
     }
 
     public FlightInfo(Flight flight) {
-        this.id = flight.getFlightID();
-        this.departureAirport = flight.getDepartureAirport();
-        this.arrivalAirport = flight.getArrivalAirport();
-        this.departureDate = flight.getDepartureDate();
+        this.id = flight.getFlightid();
+        this.departureAirport = flight.getDepartureairport();
+        this.arrivalAirport = flight.getArrivalairport();
+        this.departureDate = flight.getDeparturedate();
     }
 
     public FlightInfo(long id, String departureAirport, String arrivalAirport, Date departureDate) {

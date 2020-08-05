@@ -2,7 +2,6 @@ package cst438flights.domain;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.sql.Date;
 
 @Entity
@@ -10,57 +9,61 @@ import java.sql.Date;
 public class Flight {
 
     @Id
-    private long flightID;
-    private String departureAirport;
-    private String arrivalAirport;
-    private Date departureDate;
+    @Column(name="flightid")
+    private Integer flightid;
+    @Column(name="departureairport")
+    private String departureairport;
+    @Column(name="arrivalairport")
+    private String arrivalairport;
+    @Column(name="departuredate")
+    private Date departuredate;
 
     public Flight() {
         this(0, "departureAirport", "arrivalAirport", new Date(2323223232L));
     }
 
-    public Flight(long flightID, String departureAirport, String arrivalAirport, Date departureDate) {
+    public Flight(Integer flightid, String departureairport, String arrivalairport, Date departuredate) {
         super();
-        this.flightID = flightID;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
-        this.departureDate = departureDate;
+        this.flightid = flightid;
+        this.departureairport = departureairport;
+        this.arrivalairport = arrivalairport;
+        this.departuredate = departuredate;
     }
 
-    public long getFlightID() {
-        return flightID;
+    public Integer getFlightid() {
+        return flightid;
     }
 
-    public void setFlightID(long flight_ID) {
-        this.flightID = flight_ID;
+    public void setFlightid(Integer flight_ID) {
+        this.flightid = flight_ID;
     }
 
-    public String getDepartureAirport() {
-        return departureAirport;
+    public String getDepartureairport() {
+        return departureairport;
     }
 
-    public void setDepartureAirport(String departureAirport) {
-        this.departureAirport = departureAirport;
+    public void setDepartureairport(String departureAirport) {
+        this.departureairport = departureAirport;
     }
 
-    public String getArrivalAirport() {
-        return arrivalAirport;
+    public String getArrivalairport() {
+        return arrivalairport;
     }
 
-    public void setArrivalAirport(String arrivalAirport) {
-        this.arrivalAirport = arrivalAirport;
+    public void setArrivalairport(String arrivalAirport) {
+        this.arrivalairport = arrivalAirport;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
+    public Date getDeparturedate() {
+        return departuredate;
     }
 
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
+    public void setDeparturedate(Date departureDate) {
+        this.departuredate = departureDate;
     }
 
     @Override
     public String toString() {
-        return "Flight [flight_ID=" + flightID + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + "]";
+        return "Flight [flight_ID=" + flightid + ", departureAirport=" + departureairport + ", arrivalAirport=" + arrivalairport + ", departureDate=" + departuredate + "]";
     }
 }

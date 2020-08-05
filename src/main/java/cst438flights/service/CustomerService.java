@@ -19,26 +19,24 @@ public class CustomerService {
     private FlightRepository flightRepository;
 
     public List<FlightInfo> getPreviousFlights(String email) {
-        List<Customer> customer = customerRepository.findByEmail(email);
 
-        if (customer.size() == 0) {
-            return null;
-        }
+        System.out.println("Email " + email);
 
-        Customer c = customer.get(0);
+        Customer customer = customerRepository.findByEmail(email);
 
-        List<Reservation> reservations = reservationRepository.findByCustomerID(c.getCustomer_ID());
+        List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
 
-        if (reservations.size() == 0) {
-            return null;
-        }
+        System.out.println("reservation list size " + reservations.size());
 
         List<FlightInfo> flights = new ArrayList<FlightInfo>();
 
-        for (int i = 0; i >= reservations.size(); i++) {
+        for (int i = 0; i < reservations.size(); i++) {
             Reservation r = reservations.get(i);
-            Flight previousFlight = flightRepository.findByFlightID(r.getDepartureFlight_ID());
-            flights.add(new FlightInfo(previousFlight.getFlightID(), previousFlight.getDepartureAirport(), previousFlight.getArrivalAirport(), previousFlight.getDepartureDate()));
+            Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
+            System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
+            FlightInfo tempFlight = new FlightInfo(previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate());
+            flights.add(tempFlight);
+            System.out.println("Flight Departure Airport (FlightInfo) " + tempFlight.getDepartureAirport());
         }
 
         return flights;

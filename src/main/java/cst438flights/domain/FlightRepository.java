@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FlightRepository extends JpaRepository<Flight, Long> {
-    List<Flight> findByArrivalAirport(String arrivalAirport);
+public interface FlightRepository extends JpaRepository<Flight, Integer> {
+    List<Flight> findByArrivalairport(String arrivalairport);
 
-    Flight findByFlightID(Long flight_ID);
+    Flight findByFlightid(Integer flightid);
 }

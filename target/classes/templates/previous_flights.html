@@ -5,17 +5,19 @@
     <title>Previous Flights</title>
 </head>
 <body>
-<tr>
-    <th>Flight ID</th>
-    <th>Departure Airport</th>
-    <th>Arrival Airport</th>
-    <th>Departure Date</th>
-</tr>
-<tr th:each="flight : ${flights}">
-    <td th:text="${flight.fightID}"></td>
-    <td th:text="${flight.departureAirport}"></td>
-    <td th:text="${flight.arrivalAirport}"></td>
-    <td th:text="${flight.departureDate}"></td>
-</tr>
+    <table>
+        <tr>
+            <th>Flight ID--</th>
+            <th>Departure Airport--</th>
+            <th>Arrival Airport--</th>
+            <th>Departure Date</th>
+        </tr>
+        <tr th:each="flight : ${flights}">
+            <td th:text="${flight.id}"></td>
+            <td th:text="${flight.departureAirport}"></td>
+            <td th:text="${flight.arrivalAirport}"></td>
+            <td th:text="${flight.departureDate}"></td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -22,9 +22,9 @@ public class FlightService {
     @Autowired
     private FanoutExchange fanout;
 
-    public FlightInfo getFlightInfo(String arrivalAirport) {
+    public FlightInfo getFlightInfo(String arrivalairport) {
 
-        List<Flight> flights = flightRepository.findByArrivalAirport(arrivalAirport);
+        List<Flight> flights = flightRepository.findByArrivalairport(arrivalairport);
 
         if (flights.size() == 0) {
             return null;
@@ -32,7 +32,7 @@ public class FlightService {
 
         Flight f = flights.get(0);
 
-        return new FlightInfo(f.getFlightID(), f.getDepartureAirport(), f.getArrivalAirport(), f.getDepartureDate());
+        return new FlightInfo(f.getFlightid(), f.getDepartureairport(), f.getArrivalairport(), f.getDeparturedate());
     }
 
     public void requestReservation(String departureAirport, String arrivalAirport, String departureDate) {
