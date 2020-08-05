@@ -1,5 +1,7 @@
 package cst438flights.controller;
 
+import cst438flights.domain.Customer;
+import cst438flights.domain.CustomerRepository;
 import cst438flights.domain.FlightInfo;
 import cst438flights.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,27 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @PostMapping("/customer")
     public String customerHistory(
             @RequestParam("email") String email,
+            @RequestParam("password") String password,
             Model model) {
 
-        Iterable<FlightInfo> flights = customerService.getPreviousFlights(email);
-        model.addAttribute("flights", flights);
+        Customer customer = customerRepository.findByEmail(email);
 
-        return "previous_flights";
+        System.out.println("Password stored " + customer.getPassword());
+        System.out.println("Password Entered " + password);
+
+        if (customer.getPassword().equals(password)) {
+            Iterable<FlightInfo> flights = customerService.getPreviousFlights(email);
+            model.addAttribute("flights", flights);
+
+            return "previous_flights";
+        } else {
+            return "index";
+        }
     }
 }
