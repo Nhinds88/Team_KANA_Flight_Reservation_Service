@@ -20,7 +20,7 @@
 
 
         <tr th:each="reservationFlightInfo : ${flights}">
-        <td><input type="radio" id= "*{flights}" name="flightChoice" th:value="*{reservationFlightInfo.reservationId}"/>
+        <td><input type="radio" th:id= "*{reservationFlightInfo.reservationId}" name="flightChoice" th:value="*{reservationFlightInfo.reservationId}"/>
        <label for="flightChoice" th:text ="${reservationFlightInfo.reservationId}"></label>
          </br>
        
