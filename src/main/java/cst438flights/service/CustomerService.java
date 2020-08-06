@@ -41,4 +41,35 @@ public class CustomerService {
 
         return flights;
     }
+    
+    
+    
+    public List<ReservationInfo> getPreviousReservations(String email) {
+
+        System.out.println("Email " + email);
+
+        Customer customer = customerRepository.findByEmail(email);
+
+        List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
+
+        System.out.println("reservation list size " + reservations.size());
+
+        List<ReservationInfo> reservationInfo= new ArrayList<ReservationInfo>();
+
+        for (int i = 0; i < reservations.size(); i++) {
+            Reservation r = reservations.get(i);
+            Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
+            System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
+            
+            
+            ReservationInfo tempInfo = new ReservationInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus());
+            
+            reservationInfo.add(tempInfo);
+            System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
+            System.out.println("Reservation ID: " + tempInfo.getReservationid());
+            System.out.println("List:" + reservationInfo);
+        }
+
+        return reservationInfo;
+    }
 }
