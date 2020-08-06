@@ -44,7 +44,7 @@ public class CustomerService {
     
     
     
-    public List<ReservationInfo> getPreviousReservations(String email) {
+    public List<ReservationFlightInfo> getPreviousReservations(String email) {
 
         System.out.println("Email " + email);
 
@@ -54,7 +54,7 @@ public class CustomerService {
 
         System.out.println("reservation list size " + reservations.size());
 
-        List<ReservationInfo> reservationInfo= new ArrayList<ReservationInfo>();
+        List<ReservationFlightInfo> reservationInfo= new ArrayList<ReservationFlightInfo>();
 
         for (int i = 0; i < reservations.size(); i++) {
             Reservation r = reservations.get(i);
@@ -62,7 +62,7 @@ public class CustomerService {
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
             
             
-            ReservationInfo tempInfo = new ReservationInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus());
+            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus());
             
             reservationInfo.add(tempInfo);
             System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());

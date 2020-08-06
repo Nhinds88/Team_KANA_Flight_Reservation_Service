@@ -2,7 +2,7 @@ package cst438flights.domain;
 
 import java.sql.Date;
 
-public class ReservationInfo {
+public class ReservationFlightInfo {
 
 	Integer reservationId;
     long id;
@@ -11,7 +11,7 @@ public class ReservationInfo {
     Date departureDate;
     String status;
 
-    public ReservationInfo() {
+    public ReservationFlightInfo() {
     	this.reservationId = 0;
         this.id = 0;
         this.departureAirport = null;
@@ -20,7 +20,7 @@ public class ReservationInfo {
         this.status = null;
     }
 
-    public ReservationInfo( Reservation reservation, Flight flight) {
+    public ReservationFlightInfo( Reservation reservation, Flight flight) {
     	this.reservationId = reservation.getReservationid();
         this.id = flight.getFlightid();
         this.departureAirport = flight.getDepartureairport();
@@ -29,7 +29,7 @@ public class ReservationInfo {
         this.status = flight.getStatus();
     }
 
-    public ReservationInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Date departureDate, String status) {
+    public ReservationFlightInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Date departureDate, String status) {
         super();
         this.reservationId = reservationId;
         this.id = id;

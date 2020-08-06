@@ -3,7 +3,7 @@ package cst438flights.controller;
 import cst438flights.domain.Customer;
 import cst438flights.domain.CustomerRepository;
 import cst438flights.domain.FlightInfo;
-import cst438flights.domain.ReservationInfo;
+import cst438flights.domain.ReservationFlightInfo;
 import cst438flights.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +55,7 @@ public class CustomerController {
         System.out.println("Password Entered " + password);
 
         if (customer.getPassword().equals(password)) {
-            Iterable<ReservationInfo> flights = customerService.getPreviousReservations(email);
+            Iterable<ReservationFlightInfo> flights = customerService.getPreviousReservations(email);
             model.addAttribute("flights", flights);
             return "previous_flights";
         } else {
