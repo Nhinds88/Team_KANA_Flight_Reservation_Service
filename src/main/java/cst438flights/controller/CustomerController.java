@@ -78,16 +78,5 @@ public class CustomerController {
         customerService.updateStatus(flightChoice);
         
 		return "index";
-
-/*
-        if (customer.getPassword().equals(password)) {
-            Iterable<FlightInfo> flights = customerService.getPreviousFlights(email);
-            model.addAttribute("flights", flights);
-
-            return "previous_flights";
-        } else {
-            return "index";
-        }
-        */
     }
 }
