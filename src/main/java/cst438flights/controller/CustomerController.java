@@ -45,6 +45,7 @@ public class CustomerController {
     }
      */
 
+    //Modified from above original code
     @PostMapping("/customer")
     public String customerHistory(
             @RequestParam("email") String email,
@@ -56,7 +57,11 @@ public class CustomerController {
 
         if (customer.getPassword().equals(password)) {
             Iterable<ReservationFlightInfo> flights = customerService.getPreviousReservations(email);
+            
+            System.out.println("Reservation ID + Flight Info List " + flights.toString());
+            
             model.addAttribute("flights", flights);
+            
             return "previous_flights";
         } else {
             return "index";

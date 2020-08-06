@@ -39,12 +39,13 @@ public class ReservationFlightInfo {
         this.status = status;
     }
 
-   
-    public Integer getReservationid() {
+  
+
+	public Integer getReservationId() {
 		return reservationId;
 	}
 
-	public void setReservationid(Integer reservationId) {
+	public void setReservationId(Integer reservationId) {
 		this.reservationId = reservationId;
 	}
 

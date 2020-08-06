@@ -19,17 +19,17 @@
          <form action="#" th:action="@{/cancel}" method="post">
 
 
-        <tr th:each="flight : ${flights}">
-        <td><input type="radio" id= "*{flights}" name="flightChoice" th:value="*{flight.reservationId}"/>
-       <label for="flightChoice" th:text ="${flight.id}"></label>
+        <tr th:each="reservationFlightInfo : ${flights}">
+        <td><input type="radio" id= "*{flights}" name="flightChoice" th:value="*{reservationFlightInfo.reservationId}"/>
+       <label for="flightChoice" th:text ="${reservationFlightInfo.reservationId}"></label>
          </br>
        
         </td>
-        	<td th:text="${flight.id}"></td>
-            <td th:text="${flight.departureAirport}"></td>
-            <td th:text="${flight.arrivalAirport}"></td>
-            <td th:text="${flight.departureDate}"></td>
-            <td th:text="${flight.status}"></td>
+        	<td th:text="${reservationFlightInfo.id}"></td>
+            <td th:text="${reservationFlightInfo.departureAirport}"></td>
+            <td th:text="${reservationFlightInfo.arrivalAirport}"></td>
+            <td th:text="${reservationFlightInfo.departureDate}"></td>
+            <td th:text="${reservationFlightInfo.status}"></td>
         </tr>
         
     </table>

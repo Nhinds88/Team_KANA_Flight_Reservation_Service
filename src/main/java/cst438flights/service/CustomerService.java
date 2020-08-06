@@ -43,7 +43,7 @@ public class CustomerService {
     }
     
     
-    
+    //Modified from above code
     public List<ReservationFlightInfo> getPreviousReservations(String email) {
 
         System.out.println("Email " + email);
@@ -66,10 +66,10 @@ public class CustomerService {
             
             reservationInfo.add(tempInfo);
             System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
-            System.out.println("Reservation ID: " + tempInfo.getReservationid());
-            System.out.println("List:" + reservationInfo);
+            System.out.println("Reservation ID: " + tempInfo.getReservationId());
         }
-
+        
+        System.out.println("Reservation Info List Contents:" + reservationInfo);
         return reservationInfo;
     }
 }
