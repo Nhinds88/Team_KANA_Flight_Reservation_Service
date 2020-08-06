@@ -1,13 +1,17 @@
 package cst438flights.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class FlightInfo {
 
     long id;
     String departureAirport;
     String arrivalAirport;
-    Date departureDate;
+    Timestamp departureDate;
+    int firstClassSeats;
+    int businessClassSeats;
+    int economyClassSeats;
     String status;
 
     public FlightInfo() {
@@ -15,6 +19,9 @@ public class FlightInfo {
         this.departureAirport = null;
         this.arrivalAirport = null;
         this.departureDate = null;
+        this.firstClassSeats = 0;
+        this.businessClassSeats = 0;
+        this.economyClassSeats = 0;
         this.status = null;
     }
 
@@ -23,10 +30,24 @@ public class FlightInfo {
         this.departureAirport = flight.getDepartureairport();
         this.arrivalAirport = flight.getArrivalairport();
         this.departureDate = flight.getDeparturedate();
+        this.firstClassSeats = flight.getFirstclass();
+        this.businessClassSeats = flight.getBusinessclass();
+        this.economyClassSeats = flight.getEconomyclass();
         this.status = flight.getStatus();
     }
 
-    public FlightInfo(long id, String departureAirport, String arrivalAirport, Date departureDate, String status) {
+    public FlightInfo(long id, String departureAirport, String arrivalAirport, Timestamp departureDate, int firstClassSeats, int businessClassSeats, int economyClassSeats, String status) {
+        this.id = id;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDate = departureDate;
+        this.firstClassSeats = firstClassSeats;
+        this.businessClassSeats = businessClassSeats;
+        this.economyClassSeats = economyClassSeats;
+        this.status = status;
+    }
+
+    public FlightInfo(long id, String departureAirport, String arrivalAirport, Timestamp departureDate, String status) {
         super();
         this.id = id;
         this.departureAirport = departureAirport;
@@ -59,11 +80,11 @@ public class FlightInfo {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Date getDepartureDate() {
+    public Timestamp getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Date departureDate) {
+    public void setDepartureDate(Timestamp departureDate) {
         this.departureDate = departureDate;
     }
 
@@ -75,8 +96,41 @@ public class FlightInfo {
         this.status = status;
     }
 
+    public int getFirstClassSeats() {
+        return firstClassSeats;
+    }
+
+    public void setFirstClassSeats(int firstClassSeats) {
+        this.firstClassSeats = firstClassSeats;
+    }
+
+    public int getBusinessClassSeats() {
+        return businessClassSeats;
+    }
+
+    public void setBusinessClassSeats(int businessClassSeats) {
+        this.businessClassSeats = businessClassSeats;
+    }
+
+    public int getEconomyClassSeats() {
+        return economyClassSeats;
+    }
+
+    public void setEconomyClassSeats(int economyClassSeats) {
+        this.economyClassSeats = economyClassSeats;
+    }
+
     @Override
     public String toString() {
-        return "Flight [id=" + id + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate + ", status=" + status + "]";
+        return "FlightInfo{" +
+                "id=" + id +
+                ", departureAirport='" + departureAirport + '\'' +
+                ", arrivalAirport='" + arrivalAirport + '\'' +
+                ", departureDate=" + departureDate +
+                ", firstClassSeats=" + firstClassSeats +
+                ", businessClassSeats=" + businessClassSeats +
+                ", economyClassSeats=" + economyClassSeats +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
