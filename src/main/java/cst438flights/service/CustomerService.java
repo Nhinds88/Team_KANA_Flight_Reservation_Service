@@ -61,12 +61,15 @@ public class CustomerService {
             Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
             
-            
-            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus());
-            
+       
+            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus());
+            String testString = tempInfo.getBookingStatus();
+            System.out.println("test string = " + testString);
+            if (testString.equals("confirmed")) {
             reservationInfo.add(tempInfo);
             System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
             System.out.println("Reservation ID: " + tempInfo.getReservationId());
+            }
         }
         
         System.out.println("Reservation Info List Contents:" + reservationInfo);

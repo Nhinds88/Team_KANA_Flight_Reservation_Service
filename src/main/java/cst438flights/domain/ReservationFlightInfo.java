@@ -10,6 +10,7 @@ public class ReservationFlightInfo {
     String arrivalAirport;
     Date departureDate;
     String status;
+    String bookingStatus;
 
     public ReservationFlightInfo() {
     	this.reservationId = 0;
@@ -18,6 +19,7 @@ public class ReservationFlightInfo {
         this.arrivalAirport = null;
         this.departureDate = null;
         this.status = null;
+        this.bookingStatus = null;
     }
 
     public ReservationFlightInfo( Reservation reservation, Flight flight) {
@@ -27,9 +29,10 @@ public class ReservationFlightInfo {
         this.arrivalAirport = flight.getArrivalairport();
         this.departureDate = flight.getDeparturedate();
         this.status = flight.getStatus();
+        this.bookingStatus = reservation.getBookingStatus();
     }
 
-    public ReservationFlightInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Date departureDate, String status) {
+    public ReservationFlightInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Date departureDate, String status, String bookingStatus) {
         super();
         this.reservationId = reservationId;
         this.id = id;
@@ -37,6 +40,7 @@ public class ReservationFlightInfo {
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.status = status;
+        this.bookingStatus = bookingStatus;
     }
 
   
@@ -89,12 +93,20 @@ public class ReservationFlightInfo {
         this.status = status;
     }
 
-	@Override
-	public String toString() {
-		return "ReservationInfo [reservationId=" + reservationId + ", id=" + id + ", departureAirport="
-				+ departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate
-				+ ", status=" + status + "]";
+	public String getBookingStatus() {
+		return bookingStatus;
 	}
 
- 
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "ReservationFlightInfo [reservationId=" + reservationId + ", id=" + id + ", departureAirport="
+				+ departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate
+				+ ", status=" + status + ", bookingStatus=" + bookingStatus + "]";
+	}
+
+   
 }

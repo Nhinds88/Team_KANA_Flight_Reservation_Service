@@ -26,12 +26,14 @@ public class Reservation {
     private Float totalprice;
     @Column(name="reservationorigin")
     private String reservationorigin;
+    @Column(name="bookingstatus")
+    private String bookingstatus;
 
     public Reservation() {
-        this(9999,9999,9999, "first", 1, "no", 300f, "kana");
+        this(9999,9999,9999, "first", 1, "no", 300f, "kana", "confirmed");
     }
 
-    public Reservation(Integer reservationid, Integer customerid, Integer departureflightid, String seatclass, Integer numpassengers, String priorityboarding, Float totalprice, String reservationorigin) {
+    public Reservation(Integer reservationid, Integer customerid, Integer departureflightid, String seatclass, Integer numpassengers, String priorityboarding, Float totalprice, String reservationorigin, String bookingstatus) {
         super();
         this.reservationid = reservationid;
         this.customerid = customerid;
@@ -41,6 +43,7 @@ public class Reservation {
         this.priorityboarding = priorityboarding;
         this.totalprice = totalprice;
         this.reservationorigin = reservationorigin;
+        this.bookingstatus = bookingstatus;
     }
 
     public Integer getReservationid() {
@@ -106,9 +109,24 @@ public class Reservation {
     public void setReservationorigin(String reservationOrigin) {
         this.reservationorigin = reservationOrigin;
     }
+    
+    
 
-    @Override
-    public String toString() {
-        return "Reservation [reservation_ID=" + reservationid + ", customer_ID=" + customerid + ", departureFlight_ID=" + departureflightid + ", seatClass=" + seatclass + ", numPassengers=" + numpassengers + ", priorityBoarding=" + priorityboarding + ", totalPrice=" + totalprice + ", reservationOrigin=" + reservationorigin +"]";
-    }
+    public String getBookingStatus() {
+		return bookingstatus;
+	}
+
+	public void setBookingStatus(String bookingstatus) {
+		this.bookingstatus = bookingstatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Reservation [reservationid=" + reservationid + ", customerid=" + customerid + ", departureflightid="
+				+ departureflightid + ", seatclass=" + seatclass + ", numpassengers=" + numpassengers
+				+ ", priorityboarding=" + priorityboarding + ", totalprice=" + totalprice + ", reservationorigin="
+				+ reservationorigin + ", bookingstatus=" + bookingstatus + "]";
+	}
+
+
 }
