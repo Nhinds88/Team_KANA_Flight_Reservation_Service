@@ -75,7 +75,8 @@ public class CustomerController {
             Model model) {
 
         System.out.println("Flight To Cancel " + flightChoice);
-        //In progress, trying to get the reservation ID to show up
+        customerService.updateStatus(flightChoice);
+        
 		return "index";
 
 /*

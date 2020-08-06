@@ -75,4 +75,20 @@ public class CustomerService {
         System.out.println("Reservation Info List Contents:" + reservationInfo);
         return reservationInfo;
     }
+    
+    public void updateStatus(String flightToCancel) {
+
+    	
+        System.out.println("Flight to cancel " + flightToCancel);
+        int flightNumber = Integer.parseInt(flightToCancel);
+        System.out.println("Flight to cancel " + flightNumber);
+        Reservation reservation = reservationRepository.findByReservationid(flightNumber);
+        reservation.setBookingStatus("cancelled");
+        reservationRepository.save(reservation);
+
+    
+    }
+    
+    
+    
 }
