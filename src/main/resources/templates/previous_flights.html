@@ -5,21 +5,34 @@
     <title>Previous Flights</title>
 </head>
 <body>
+<img src="/kanaAirlines.png" alt="Kana Airlines">
     <table>
+    <h1>Current Flights</h1>
         <tr>
+        	<th>Reservation ID--</th>
             <th>Flight ID--</th>
             <th>Departure Airport--</th>
             <th>Arrival Airport--</th>
             <th>Departure Date--</th>
             <th>Status</th>
         </tr>
-        <tr th:each="flight : ${flights}">
-            <td th:text="${flight.id}"></td>
-            <td th:text="${flight.departureAirport}"></td>
-            <td th:text="${flight.arrivalAirport}"></td>
-            <td th:text="${flight.departureDate}"></td>
-            <td th:text="${flight.status}"></td>
+         <form action="#" th:action="@{/cancel}" method="post">
+
+
+        <tr th:each="reservationFlightInfo : ${flights}">
+        <td><input type="radio" th:id= "*{reservationFlightInfo.reservationId}" name="flightChoice" th:value="*{reservationFlightInfo.reservationId}"/>
+       <label for="flightChoice" th:text ="${reservationFlightInfo.reservationId}"></label>
+         </br>
+       
+        </td>
+        	<td th:text="${reservationFlightInfo.id}"></td>
+            <td th:text="${reservationFlightInfo.departureAirport}"></td>
+            <td th:text="${reservationFlightInfo.arrivalAirport}"></td>
+            <td th:text="${reservationFlightInfo.departureDate}"></td>
+            <td th:text="${reservationFlightInfo.status}"></td>
         </tr>
+        
     </table>
+    <input type="submit" value="Cancel Selected Flight" />
 </body>
 </html>
