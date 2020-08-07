@@ -1,15 +1,48 @@
 <!DOCTYPE html>
-<html xmls:th="www.thymeleaf.org">
+<html xmlns:th="www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Hello</title>
 </head>
 <body>
-<img src="kanaAirlines.png" alt="Kana Airlines">
-<h2>Hello World!</h2>
+    <img src="kanaAirlines.png" alt="Kana Airlines">
+    <h2>Book a flight!</h2>
 
+    <form action="#" th:action="@{/flight/reservation}" method="post">
+        <h3>Select your departing city</h3> <br />
+<!--        <select th:name="departureAirport" id="departureAirport" required>-->
+<!--            <option value="San Diego">San Diego</option>-->
+<!--            <option value="Honolulu">Honolulu</option>-->
+<!--            <option value="Monterey">Monterey</option>-->
+<!--        </select>-->
+<!--        <br />-->
+<!--        <select name="arrivalAirport" id="arrivalAirport" required>-->
+<!--            <option value="San Diego">San Diego</option>-->
+<!--            <option value="Honolulu">Honolulu</option>-->
+<!--            <option value="Monterey">Monterey</option>-->
+<!--        </select>-->
+        <input type="radio" name="departureAirport" id="departureAirport" value="San Diego"><label for="departureAirport">San Diego</label>
+        <br />
+        <input type="radio" name="arrivalAirport" id="arrivalAirport" value="Monterey"><label for="arrivalAirport">Monterey</label>
+        <br />
+        <input type="date" name="departureDate" id="departureDate" value="departureDate"><label for="departureDate">Enter the date of your flight:</label> <br />
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
 
-</body>
-</html>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <form action="#" th:action="@{/customer}" method="post">
+        <h3>Look up previous flights</h3>
+        <input type="text" name="email" id="email" value="email">
+        <br />
+        <input type="password" name="password" id="password">
+        <br />
+        <input type="submit" value="submit">
+    </form>
+
 </body>
 </html>
