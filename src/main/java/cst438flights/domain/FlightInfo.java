@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class FlightInfo {
 
-    long id;
-    String departureAirport;
-    String arrivalAirport;
-    Date departureDate;
-    String status;
+    private long id;
+    private String departureAirport;
+    private String arrivalAirport;
+    private Date departureDate;
+    private String status;
 
     public FlightInfo() {
         this.id = 0;

@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class ReservationFlightInfo {
 
-	Integer reservationId;
-    long id;
-    String departureAirport;
-    String arrivalAirport;
-    Date departureDate;
-    String status;
-    String bookingStatus;
+	private Integer reservationId;
+    private long id;
+    private String departureAirport;
+    private String arrivalAirport;
+    private Date departureDate;
+    private String status;
+    private String bookingStatus;
 
     public ReservationFlightInfo() {
     	this.reservationId = 0;

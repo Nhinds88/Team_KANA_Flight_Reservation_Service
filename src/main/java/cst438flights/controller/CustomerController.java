@@ -52,8 +52,8 @@ public class CustomerController {
             @RequestParam("password") String password,
             Model model) {
         Customer customer = customerRepository.findByEmail(email);
-        System.out.println("Password stored " + customer.getPassword());
-        System.out.println("Password Entered " + password);
+        //System.out.println("Password stored " + customer.getPassword());
+        //System.out.println("Password Entered " + password);
 
         if (customer.getPassword().equals(password)) {
             Iterable<ReservationFlightInfo> flights = customerService.getPreviousReservations(email);
