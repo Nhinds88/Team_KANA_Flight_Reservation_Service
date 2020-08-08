@@ -1,6 +1,6 @@
 package cst438flights.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReservationFlightInfo {
 
@@ -8,7 +8,7 @@ public class ReservationFlightInfo {
     private long id;
     private String departureAirport;
     private String arrivalAirport;
-    private Date departureDate;
+    private Timestamp departureDate;
     private String status;
     private String bookingStatus;
 
@@ -32,7 +32,7 @@ public class ReservationFlightInfo {
         this.bookingStatus = reservation.getBookingStatus();
     }
 
-    public ReservationFlightInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Date departureDate, String status, String bookingStatus) {
+    public ReservationFlightInfo(Integer reservationId, long id, String departureAirport, String arrivalAirport, Timestamp departureDate, String status, String bookingStatus) {
         super();
         this.reservationId = reservationId;
         this.id = id;
@@ -77,11 +77,11 @@ public class ReservationFlightInfo {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Date getDepartureDate() {
+    public Timestamp getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Date departureDate) {
+    public void setDepartureDate(Timestamp departureDate) {
         this.departureDate = departureDate;
     }
 
