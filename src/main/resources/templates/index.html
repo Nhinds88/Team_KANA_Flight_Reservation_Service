@@ -1,48 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Hello</title>
+    <meta charset="ISO-8859-1">
+    <title>Hello</title>
 </head>
 <body>
-    <img src="kanaAirlines.png" alt="Kana Airlines">
-    <h2>Book a flight!</h2>
+<img src="kanaAirlines.png" alt="Kana Airlines">
+<h2>Book a flight!</h2>
 
-    <form action="#" th:action="@{/flight/reservation}" method="post">
-        <h3>Select your departing city</h3> <br />
-<!--        <select th:name="departureAirport" id="departureAirport" required>-->
-<!--            <option value="San Diego">San Diego</option>-->
-<!--            <option value="Honolulu">Honolulu</option>-->
-<!--            <option value="Monterey">Monterey</option>-->
-<!--        </select>-->
-<!--        <br />-->
-<!--        <select name="arrivalAirport" id="arrivalAirport" required>-->
-<!--            <option value="San Diego">San Diego</option>-->
-<!--            <option value="Honolulu">Honolulu</option>-->
-<!--            <option value="Monterey">Monterey</option>-->
-<!--        </select>-->
-        <input type="radio" name="departureAirport" id="departureAirport" value="San Diego"><label for="departureAirport">San Diego</label>
-        <br />
-        <input type="radio" name="arrivalAirport" id="arrivalAirport" value="Monterey"><label for="arrivalAirport">Monterey</label>
-        <br />
-        <input type="date" name="departureDate" id="departureDate" value="departureDate"><label for="departureDate">Enter the date of your flight:</label> <br />
-        <br />
-        <input type="submit" value="Submit" />
-    </form>
-
-    <br />
-    <br />
-    <br />
+<form action="#" th:action="@{/flight/reservation}" method="post">
+    <h3>Select your departing city</h3> <br />
+    <select th:name="departureAirport" id="departureAirport" onChange="departureUpdate()" required>
+        <option value="">Select a City</option>
+        <option value="San Diego">San Diego</option>
+        <option value="Honolulu">Honolulu</option>
+        <option value="Monterey">Monterey</option>
+    </select>
     <br />
 
-    <form action="#" th:action="@{/customer}" method="post">
-        <h3>Look up previous flights</h3>
-        <label for="email">Email </label><input type="text" name="email" id="email" placeholder="email">
-        <br />
-        <label for="password">Password </label><input type="password" name="password" id="password">
-        <br />
-        <input type="submit" value="submit">
-    </form>
+    <select name="arrivalAirport" id="arrivalAirport" onChange="arrivalUpdate()" required>
+        <option value="">Select a City</option>
+        <option value="San Diego">San Diego</option>
+        <option value="Honolulu">Honolulu</option>
+        <option value="Monterey">Monterey</option>
+    </select>
+    <br />
 
+    <select name="flightID" id="flightSelect" onChange="updateClassSeats()"required>
+        <option value="">Select a City Above First</option>
+    </select>
+    <input type="text" value="" name="departureDate" id="departureDate" hidden>
+    <br />
+
+    <select name="seatClass" id="classSelect" required>
+        <option value="">Select Seat Class</option>
+        <option value="firstClass" id="firstClassSeats">First Class $300, Seats Available: x</option>
+        <option value="businessClass" id="businessClassSeats">Business Class $200, Seats Available: x</option>
+        <option value="economyClass" id="economyClassSeats">Economy Class $100, Seats Available: x</option>
+    </select>
+    <br />
+
+    <label for="numPassengers">Number of Passengers:</label>
+    <input type="number" name="numPassengers" id="numPassengers"
+           value="1" min="1" max="100" onChange="checkSeats()" required>
+    <h3 id="seatError" style="color:red;"></h3>
+    <br />
+    <input type="checkbox" name="prioBoarding" id="prioBoarding">
+    <label for="prioBoarding">Priority Boarding</label>
+    <br />
+    <input type="submit" value="Submit" />
+</form>
+
+<br />
+<br />
+<br />
+<br />
+
+<form action="#" th:action="@{/customer}" method="post">
+    <h3>Look up previous flights</h3>
+    <input type="text" name="email" id="email" placeholder="email">
+    <br />
+    <input type="password" name="password" id="password">
+    <br />
+    <input type="submit" value="submit">
+</form>
+
+<script>
+    let url = window.location.origin;
+    let departureCity = "";
+    let arrivalCity = "";
+    const flightDropDown = document.getElementById("flightSelect");
+    const deafultOption = document.createElement("option");
+    deafultOption.text = "Select a Flight Date";
+    deafultOption.value = "";
+
+    //should be updated to an object for faster lookup
+    let currentFlights = [];
+
+    const firstClassSeats = document.getElementById("firstClassSeats");
+    const businessClassSeats = document.getElementById("businessClassSeats");
+    const economyClassSeats = document.getElementById("economyClassSeats");
+
+    const seatsAvailable = {
+        firstClass: 0,
+        businessClass: 0,
+        economyClass: 0,
+    }
+
+    async function getFlights() {
+        const response = await fetch(url + `/api/flights/${departureCity}/${arrivalCity}`, {
+            method: 'GET',
+            mode: 'same-origin',
+        });
+        return response.json();
+    }
+
+    function populateFlights() {
+        getFlights()
+        .then(flights => {
+            //clear previous drop down options
+            flightDropDown.innerHTML = "";
+            flightDropDown.appendChild(deafultOption);
+            //save for later if needed
+            currentFlights = flights;
+
+            //Add flights to the dropdown
+            for(let flight of flights) {
+                console.log(flight);
+                let option = document.createElement("option");
+                //Give option text as the date time
+                option.text = new Date(flight.departuredate).toTimeString();
+                //save the flightID as the value
+                option.value = flight.flightid;
+                flightDropDown.appendChild(option);
+            }
+        });
+    }
+
+    function departureUpdate() {
+        departureCity = document.getElementById("departureAirport").value;
+        console.log(departureCity);
+        if(departureCity && arrivalCity) {
+            populateFlights();
+        }
+    }
+    function arrivalUpdate() {
+        arrivalCity = document.getElementById("arrivalAirport").value;
+        console.log(arrivalCity);
+        if(departureCity && arrivalCity) {
+            populateFlights();
+        }
+    }
+
+    function replaceLastWord(string, replace) {
+        let lastIndex = string.lastIndexOf(" ");
+        string = string.substring(0, lastIndex);
+        string += " " + replace;
+        return string;
+    }
+
+    function updateClassSeats() {
+        let flightID = document.getElementById("flightSelect").value;
+        console.log(flightID);
+        for(let flight of currentFlights) {
+            console.log(flight.flightid);
+            document.getElementById("departureDate").value = flight.departuredate;
+            if(flight.flightid == flightID) {
+                firstClassSeats.innerText = replaceLastWord(firstClassSeats.innerText, flight.firstclass);
+                seatsAvailable.firstClass = flight.firstclass;
+
+                businessClassSeats.innerText = replaceLastWord(businessClassSeats.innerText, flight.businessclass);
+                seatsAvailable.businessClass = flight.businessclass;
+
+                economyClassSeats.innerText = replaceLastWord(economyClassSeats.innerText, flight.economyclass);
+                seatsAvailable.economyClass = flight.economyclass;
+                break;
+            }
+        }
+    }
+
+    function checkSeats() {
+        let numSeats = document.getElementById("numPassengers").value;
+        let seatClass = document.getElementById("classSelect").value;
+        console.log(seatsAvailable[seatClass]);
+        if(numSeats > seatsAvailable[seatClass]) {
+            document.getElementById("seatError").innerText = "Not enough seats, try a different flight or class.";
+            document.getElementById("numPassengers").value = 0;
+        }
+    }
+
+</script>
 </body>
 </html>
