@@ -18,15 +18,29 @@ public class flightRestController {
     @Autowired
     private FlightService flightService;
 
-    @GetMapping("/api/flights/{flight_ID}")
-    public ResponseEntity<FlightInfo> getFlight(String arrivalAirport) {
+    @GetMapping("/api/flights/arrival/{arrivalAirport}")
+    public ResponseEntity<List<Flight>> getFlightArrival(
+            @PathVariable("arrivalAirport") String arrivalAirport) {
 
-        FlightInfo flightInfo = flightService.getFlightInfo(arrivalAirport);
+         List<Flight> arrivalFlights = flightService.getFlightInfoArrival(arrivalAirport);
 
-        if (flightInfo == null) {
-            return new ResponseEntity<FlightInfo>(HttpStatus.NOT_FOUND);
+        if (arrivalFlights == null) {
+            return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<FlightInfo>(flightInfo, HttpStatus.OK);
+            return new ResponseEntity<List<Flight>>(arrivalFlights, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/api/flights/departure/{departureAirport}")
+    public ResponseEntity<List<Flight>> getFlightDeparture(
+            @PathVariable("departureAirport") String departureAirport) {
+
+        List<Flight> depatureFlights = flightService.getFlightInfoDepature(departureAirport);
+
+        if (depatureFlights == null) {
+            return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Flight>>(depatureFlights, HttpStatus.OK);
         }
     }
 
