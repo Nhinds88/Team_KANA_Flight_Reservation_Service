@@ -62,7 +62,7 @@ public class CustomerService {
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
             
        
-            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus());
+            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus(), r.getReservationorigin());
             String testString = tempInfo.getBookingStatus();
             System.out.println("test string = " + testString);
 
