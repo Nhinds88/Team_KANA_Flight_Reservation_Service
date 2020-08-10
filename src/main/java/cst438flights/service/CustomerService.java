@@ -79,7 +79,7 @@ public class CustomerService {
         return reservationInfo;
     }
     
-    //Modified rest vesrion of getPreviousReservations
+    //Modified rest version of getPreviousReservations
     public List<ReservationFlightInfo> getPreviousReservationsRest(String email) {
 
         System.out.println("Email " + email);
@@ -123,5 +123,22 @@ public class CustomerService {
         reservation.setBookingStatus("cancelled");
         reservationRepository.save(reservation);
 
+    }
+    
+    public void updateStatusRest(String flightToCancel) {
+        System.out.println("Flight to cancel " + flightToCancel);
+        int flightNumber = Integer.parseInt(flightToCancel);
+        System.out.println("Flight to cancel " + flightNumber);
+        Reservation reservation = reservationRepository.findByReservationid(flightNumber);
+        //If reservation is null, do not add
+        if (reservation == null) {
+        	return;
+        }
+        String origin = reservation.getReservationorigin(); 
+        //Only attempts cancellation if planner
+        if (origin.equals("planner")) {
+        reservation.setBookingStatus("cancelled");
+        reservationRepository.save(reservation);
+        }
     }
 }

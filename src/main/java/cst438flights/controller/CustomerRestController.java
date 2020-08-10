@@ -48,14 +48,15 @@ public class CustomerRestController {
     }
 
     @GetMapping("api/cancel_reservation/{reservationID}")
-    public ResponseEntity<Reservation> cancelReservation(
+    public ResponseEntity<Reservation> cancelReservationRest(
             @PathVariable("reservationID") Integer reservationID) {
 
          String res_ID_string = Integer.toString(reservationID);
-         customerService.updateStatus(res_ID_string); // Cancels the reservation
+         customerService.updateStatusRest(res_ID_string); // Cancels the reservation
          Reservation reservation = reservationRepository.findByReservationid(reservationID);
-
-         if (reservation == null) {
+         
+         //prevents non-planner/non-existant flight cancellations
+         if (reservation == null || reservation.getReservationorigin() == "kana") {
              return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
          } else {
              return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
