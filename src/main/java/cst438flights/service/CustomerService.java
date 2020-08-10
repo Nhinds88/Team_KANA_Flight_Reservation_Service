@@ -130,7 +130,7 @@ public class CustomerService {
         int flightNumber = Integer.parseInt(flightToCancel);
         System.out.println("Flight to cancel " + flightNumber);
         Reservation reservation = reservationRepository.findByReservationid(flightNumber);
-        //If reservation is null, do not add
+        //If reservation is null, do not attempt update
         if (reservation == null) {
         	return;
         }

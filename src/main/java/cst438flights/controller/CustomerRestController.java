@@ -55,9 +55,10 @@ public class CustomerRestController {
          customerService.updateStatusRest(res_ID_string); // Cancels the reservation
          Reservation reservation = reservationRepository.findByReservationid(reservationID);
          
-         //prevents non-planner/non-existant flight cancellations
-         if (reservation == null || reservation.getReservationorigin() == "kana") {
+         //prevents non-planner/non-existent flight cancellations
+         if (reservation == null || (reservation.getReservationorigin()).equals("kana")) {
              return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
+             
          } else {
              return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
          }
