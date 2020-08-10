@@ -35,10 +35,10 @@ public class CustomerRestController {
     }
 
     @GetMapping("api/previous_reservation/{email}")
-    public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservations(
+    public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservationsRest(
             @PathVariable("email") String email) {
 
-         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservations(email);
+         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservationsRest(email);
 
          if (previousReservation == null) {
              return new ResponseEntity<List<ReservationFlightInfo>>(HttpStatus.NOT_FOUND);

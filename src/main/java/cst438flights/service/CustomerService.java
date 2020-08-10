@@ -63,10 +63,48 @@ public class CustomerService {
             
        
             ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus(), r.getReservationorigin());
-            String testString = tempInfo.getBookingStatus();
-            System.out.println("test string = " + testString);
+            String testStatus = tempInfo.getBookingStatus();
+            String testOrigin = tempInfo.getReservationOrigin();
+            System.out.println("test status = " + testStatus);
+            System.out.println("test origin = " + testOrigin);
 
-            if (testString.equals("confirmed")) {
+            if (testStatus.equals("confirmed") && testOrigin.equals("kana")) {
+                reservationInfo.add(tempInfo);
+                System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
+                System.out.println("Reservation ID: " + tempInfo.getReservationId());
+            }
+        }
+        
+        System.out.println("Reservation Info List Contents:" + reservationInfo);
+        return reservationInfo;
+    }
+    
+    //Modified rest vesrion of getPreviousReservations
+    public List<ReservationFlightInfo> getPreviousReservationsRest(String email) {
+
+        System.out.println("Email " + email);
+
+        Customer customer = customerRepository.findByEmail(email);
+
+        List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
+
+        System.out.println("reservation list size " + reservations.size());
+
+        List<ReservationFlightInfo> reservationInfo= new ArrayList<ReservationFlightInfo>();
+
+        for (int i = 0; i < reservations.size(); i++) {
+            Reservation r = reservations.get(i);
+            Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
+            System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
+            
+       
+            ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus(), r.getReservationorigin());
+            String testStatus = tempInfo.getBookingStatus();
+            String testOrigin = tempInfo.getReservationOrigin();
+            System.out.println("test status = " + testStatus);
+            System.out.println("test origin = " + testOrigin);
+
+            if (testStatus.equals("confirmed") && testOrigin.equals("planner")) {
                 reservationInfo.add(tempInfo);
                 System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
                 System.out.println("Reservation ID: " + tempInfo.getReservationId());
@@ -78,7 +116,6 @@ public class CustomerService {
     }
     
     public void updateStatus(String flightToCancel) {
-
         System.out.println("Flight to cancel " + flightToCancel);
         int flightNumber = Integer.parseInt(flightToCancel);
         System.out.println("Flight to cancel " + flightNumber);
