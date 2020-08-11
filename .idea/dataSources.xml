@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="flights@localhost" uuid="cacbeb8e-6f0d-4c48-b8bf-9f32bce7437d">
+    <data-source source="LOCAL" name="JawsDB" uuid="2d1950d0-e018-4d2e-b63a-145e54893234">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
+      <remarks>KANA_JawsDB</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/flights</jdbc-url>
+      <jdbc-url>jdbc:mysql://rnr56s6e2uk326pj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/alvmmxpisqsz89vz</jdbc-url>
     </data-source>
   </component>
 </project>
