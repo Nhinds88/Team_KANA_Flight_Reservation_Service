@@ -1,15 +1,13 @@
 package cst438flights.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="customer")
 public class Customer {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="customerid")
     private Integer customerid;
     @Column(name="lastname")
@@ -23,6 +21,13 @@ public class Customer {
 
     public Customer() { this(0, "Skywalker", "Luke", "jedi@lightside.com", "force"); }
 
+    public Customer(String email) {
+        super();
+        this.lastname = "";
+        this.firstname = "";
+        this.email = email;
+        this.password = "c5um0n73r3yb4y";
+    }
 
     public Customer(Integer customerid, String lastname, String firstname, String email, String password) {
         super();
