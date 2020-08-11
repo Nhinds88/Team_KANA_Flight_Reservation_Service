@@ -62,7 +62,16 @@ public class flightRestController {
         }
     }
 
-    @PostMapping("/api/flight/reservation")
+    @PostMapping("/api/flights")
+    public ResponseEntity<List<Flight>> createReservation(
+            @RequestParam("departureAirport") String departureAirport,
+            @RequestParam("arrivalAirport") String arrivalAirport
+    ) {
+        return getAvailableFlights(departureAirport, arrivalAirport);
+    }
+
+
+        @PostMapping("/api/flight/reservation")
     public ResponseEntity<Reservation> createReservation(
             @RequestParam("email") String email,
             @RequestParam("seatClass") String seatClass,
@@ -81,7 +90,7 @@ public class flightRestController {
     }
     
     //getMapping option to book reservation
-        @GetMapping("/api/flight/reservation2/{email}/{seatClass}/{numPassengers}/{prioBoarding}/{flightID}")
+    @GetMapping("/api/flight/reservation2/{email}/{seatClass}/{numPassengers}/{prioBoarding}/{flightID}")
     public ResponseEntity<Reservation> createReservation2(
     		@PathVariable("email") String email,
     		@PathVariable("seatClass") String seatClass,

@@ -84,9 +84,9 @@
     const economyClassSeats = document.getElementById("economyClassSeats");
 
     const seatsAvailable = {
-        firstClass: 0,
-        businessClass: 0,
-        economyClass: 0,
+        first: 0,
+        business: 0,
+        economy: 0,
     }
 
     async function getFlights() {
@@ -149,13 +149,13 @@
             document.getElementById("departureDate").value = flight.departuredate;
             if(flight.flightid == flightID) {
                 firstClassSeats.innerText = replaceLastWord(firstClassSeats.innerText, flight.firstclass);
-                seatsAvailable.firstClass = flight.firstclass;
+                seatsAvailable.first = flight.firstclass;
 
                 businessClassSeats.innerText = replaceLastWord(businessClassSeats.innerText, flight.businessclass);
-                seatsAvailable.businessClass = flight.businessclass;
+                seatsAvailable.business = flight.businessclass;
 
                 economyClassSeats.innerText = replaceLastWord(economyClassSeats.innerText, flight.economyclass);
-                seatsAvailable.economyClass = flight.economyclass;
+                seatsAvailable.economy = flight.economyclass;
                 break;
             }
         }
@@ -165,6 +165,7 @@
         let numSeats = document.getElementById("numPassengers").value;
         let seatClass = document.getElementById("classSelect").value;
         console.log(seatsAvailable[seatClass]);
+        console.log(numSeats);
         if(numSeats > seatsAvailable[seatClass]) {
             document.getElementById("seatError").innerText = "Not enough seats, try a different flight or class.";
             document.getElementById("numPassengers").value = 0;

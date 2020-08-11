@@ -35,10 +35,10 @@ public class CustomerRestController {
     }
 
     @GetMapping("api/previous_reservation/{email}")
-    public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservations(
+    public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservationsRest(
             @PathVariable("email") String email) {
 
-         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservations(email);
+         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservationsRest(email);
 
          if (previousReservation == null) {
              return new ResponseEntity<List<ReservationFlightInfo>>(HttpStatus.NOT_FOUND);
@@ -48,15 +48,17 @@ public class CustomerRestController {
     }
 
     @GetMapping("api/cancel_reservation/{reservationID}")
-    public ResponseEntity<Reservation> cancelReservation(
+    public ResponseEntity<Reservation> cancelReservationRest(
             @PathVariable("reservationID") Integer reservationID) {
 
          String res_ID_string = Integer.toString(reservationID);
-         customerService.updateStatus(res_ID_string); // Cancels the reservation
+         customerService.updateStatusRest(res_ID_string); // Cancels the reservation
          Reservation reservation = reservationRepository.findByReservationid(reservationID);
-
-         if (reservation == null) {
+         
+         //prevents non-planner/non-existent flight cancellations
+         if (reservation == null || (reservation.getReservationorigin()).equals("kana")) {
              return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
+             
          } else {
              return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
          }
