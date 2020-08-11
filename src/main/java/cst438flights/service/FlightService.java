@@ -87,6 +87,13 @@ public class FlightService {
         else if(seatClass.equals("first")) perSeat = 300;
         float totalPrice = (perSeat + priorityPrice) * numPassengers;
 
+        //Remove seats to be booked
+        Flight flight = flightRepository.findByFlightid(flightID);
+        if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() - numPassengers);
+        else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass()- numPassengers);
+        else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()- numPassengers);
+        flightRepository.save(flight);
+        
         //make the reservation
         Reservation reservation = new Reservation(customer.getCustomerid(), flightID, seatClass, numPassengers, boardingString, totalPrice, origin, "confirmed");
         //save and update the reservation

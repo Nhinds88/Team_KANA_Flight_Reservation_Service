@@ -6,10 +6,19 @@
 <img src="/kanaAirlines.png" alt="Kana Airlines">
 </head>
 <body>
+<br>
+<p th:inline="text"><strong>[[${email}]]</strong>, thank you for choosing KANA Airlines!</p>
+<p th:inline="text">Your flight will be on: <strong>[[${shortDate}]] </strong></p>
+<p th:inline="text">Your departure airport: <strong>[[${departureAirport}]]</strong></p>
+<p th:inline="text">Your destination airport: <strong>[[${arrivalAirport}]]</strong></p>
+<p th:inline="text">Seat Class: <strong>[[${seating}]]</strong></p>
+<p th:inline="text">Total Passengers: <strong>[[${numPassengers}]]</strong></p>
+<p th:inline="text">Priority Boarding ($100 per passenger): <strong>[[${boardingStatus}]]</strong></p>
 
-<p th:inline="text">Your flight will be on: <strong>[[${departureDate}]] </strong></p>
-<p th:inline="text">Your departure airport:<strong>[[${departureAirport}]]</strong></p>
-<p th:inline="text">Your destination airport:<strong>[[${arrivalAirport}]]</strong></p>
+<p th:inline="text">Your Final Total Is: <strong>$[[${price}]]0</strong></p>
+
+
+
 
 </body>
 </html> 

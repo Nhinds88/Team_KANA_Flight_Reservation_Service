@@ -64,7 +64,7 @@ public class CustomerController {
             
             return "previous_flights";
         } else {
-            return "index";
+            return "error";
         }
     }
     
@@ -77,6 +77,31 @@ public class CustomerController {
         System.out.println("Flight To Cancel " + flightChoice);
         customerService.updateStatus(flightChoice);
         
-		return "index";
+		return "index2";
     }
+    
+    
+    @PostMapping("/newAccount")
+    public String newAccount(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName")  String lastName,
+            @RequestParam("email")  String email,
+            @RequestParam("password") String password,
+            Model model) {
+
+        System.out.println("firstName: " + firstName + " lastName: " + lastName + " email: " + email );
+        
+        Customer customer = customerRepository.findByEmail(email);
+        
+        customer.setFirstname(firstName);
+        customer.setLastname(lastName);
+        customer.setPassword(password);
+        
+       customerRepository.save(customer);
+        
+		return "index2";
+    }
+    
+    
+    
 }
