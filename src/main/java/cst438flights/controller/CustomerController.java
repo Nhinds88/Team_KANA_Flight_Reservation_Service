@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Controller
 public class CustomerController {
@@ -57,8 +58,16 @@ public class CustomerController {
 
         if (customer.getPassword().equals(password)) {
             Iterable<ReservationFlightInfo> flights = customerService.getPreviousReservations(email);
-            
             System.out.println("Reservation ID + Flight Info List " + flights.toString());
+            
+            //counts how many items in iterable flight list
+            int listCount = (int) StreamSupport.stream(flights.spliterator(), false).count();
+            
+            if (listCount == 0) {
+            	return "no_reservations";
+            }
+
+            System.out.println("list count" + listCount);
             
             model.addAttribute("flights", flights);
             
