@@ -115,20 +115,33 @@ public class CustomerService {
         return reservationInfo;
     }
     
+    
     public void updateStatus(String flightToCancel) {
-        System.out.println("Flight to cancel " + flightToCancel);
+        //System.out.println("Flight to cancel " + flightToCancel);
         int flightNumber = Integer.parseInt(flightToCancel);
-        System.out.println("Flight to cancel " + flightNumber);
+        //System.out.println("Flight to cancel " + flightNumber);
         Reservation reservation = reservationRepository.findByReservationid(flightNumber);
         reservation.setBookingStatus("cancelled");
+        
+        //Add cancelled seats back to respective seat pool
+        String seatClass = reservation.getSeatclass();
+        int numPassengers = reservation.getNumpassengers();
+        Flight flight = flightRepository.findByFlightid(reservation.getDepartureflightid());
+        if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() + numPassengers);
+        else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass() + numPassengers);
+        else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()+ numPassengers);
+        
+        //Save Changes
+        flightRepository.save(flight);
         reservationRepository.save(reservation);
 
     }
     
+    //Rest version updateStatus
     public void updateStatusRest(String flightToCancel) {
-        System.out.println("Flight to cancel " + flightToCancel);
+        //System.out.println("Flight to cancel " + flightToCancel);
         int flightNumber = Integer.parseInt(flightToCancel);
-        System.out.println("Flight to cancel " + flightNumber);
+        //System.out.println("Flight to cancel " + flightNumber);
         Reservation reservation = reservationRepository.findByReservationid(flightNumber);
         //If reservation is null, do not attempt update
         if (reservation == null) {
@@ -136,8 +149,18 @@ public class CustomerService {
         }
         String origin = reservation.getReservationorigin(); 
         //Only attempts cancellation if planner
-        if (origin.equals("planner")) {
+        if (origin.equals("planner")) {	
         reservation.setBookingStatus("cancelled");
+        
+        //Add cancelled seats back to respective seat pool
+        String seatClass = reservation.getSeatclass();
+        int numPassengers = reservation.getNumpassengers();
+        Flight flight = flightRepository.findByFlightid(reservation.getDepartureflightid());
+        if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() + numPassengers);
+        else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass() + numPassengers);
+        else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()+ numPassengers);
+        //Save changes
+        flightRepository.save(flight);
         reservationRepository.save(reservation);
         }
     }
