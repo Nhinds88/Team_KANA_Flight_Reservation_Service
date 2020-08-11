@@ -67,7 +67,7 @@ public class FlightController {
         model.addAttribute("price", booked.getTotalprice());
         
         if (password.equals("c5um0n73r3yb4y")) {
-        return "new_account";
+            return "new_account";
         }
         
         else return "request_reservation";
