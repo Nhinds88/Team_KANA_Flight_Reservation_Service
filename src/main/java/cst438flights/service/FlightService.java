@@ -26,7 +26,7 @@ public class FlightService {
     @Autowired
     private FanoutExchange fanout;
 
-    public FlightInfo getFlightInfo(String arrivalairport) {
+    public List<Flight> getFlightInfoArrival(String arrivalairport) {
 
         List<Flight> flights = flightRepository.findByArrivalairport(arrivalairport);
 
@@ -34,9 +34,18 @@ public class FlightService {
             return null;
         }
 
-        Flight f = flights.get(0);
+        return flights;
+    }
 
-        return new FlightInfo(f.getFlightid(), f.getDepartureairport(), f.getArrivalairport(), f.getDeparturedate(), f.getStatus());
+    public List<Flight> getFlightInfoDepature(String departureairport) {
+
+        List<Flight> flights = flightRepository.findByDepartureairport(departureairport);
+
+        if (flights.size() == 0) {
+            return null;
+        }
+
+        return flights;
     }
 
     public List<Flight> getAvailableFights(String departureAirport, String arrivalairport) {

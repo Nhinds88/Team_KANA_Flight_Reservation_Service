@@ -65,10 +65,11 @@ public class CustomerService {
             ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus());
             String testString = tempInfo.getBookingStatus();
             System.out.println("test string = " + testString);
+
             if (testString.equals("confirmed")) {
-            reservationInfo.add(tempInfo);
-            System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
-            System.out.println("Reservation ID: " + tempInfo.getReservationId());
+                reservationInfo.add(tempInfo);
+                System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
+                System.out.println("Reservation ID: " + tempInfo.getReservationId());
             }
         }
         
@@ -78,7 +79,6 @@ public class CustomerService {
     
     public void updateStatus(String flightToCancel) {
 
-    	
         System.out.println("Flight to cancel " + flightToCancel);
         int flightNumber = Integer.parseInt(flightToCancel);
         System.out.println("Flight to cancel " + flightNumber);
@@ -86,9 +86,5 @@ public class CustomerService {
         reservation.setBookingStatus("cancelled");
         reservationRepository.save(reservation);
 
-    
     }
-    
-    
-    
 }
