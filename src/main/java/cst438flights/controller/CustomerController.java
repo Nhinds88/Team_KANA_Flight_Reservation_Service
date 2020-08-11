@@ -77,7 +77,7 @@ public class CustomerController {
         System.out.println("Flight To Cancel " + flightChoice);
         customerService.updateStatus(flightChoice);
         
-		return "index2";
+		return "confirm";
     }
     
     
@@ -99,7 +99,7 @@ public class CustomerController {
         
        customerRepository.save(customer);
         
-		return "index2";
+		return "confirm";
     }
     
     
