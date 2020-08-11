@@ -70,11 +70,13 @@ public class FlightService {
 
         String boardingString = (priorityBoarding ? "yes" : "no");
         float perSeat = 0;
+        float priorityPrice = 0;
+        if (boardingString.equals("yes")) priorityPrice = 100;
         //should probably add seat class as a repository / tie to database
-        if(seatClass == "economy") perSeat = 100;
-        else if(seatClass == "business") perSeat = 200;
-        else if(seatClass == "first") perSeat = 300;
-        float totalPrice = perSeat * numPassengers;
+        if(seatClass.equals("economy")) perSeat = 100;
+        else if(seatClass.equals("business")) perSeat = 200;
+        else if(seatClass.equals("first")) perSeat = 300;
+        float totalPrice = (perSeat + priorityPrice) * numPassengers;
 
         //make the reservation
         Reservation reservation = new Reservation(customer.getCustomerid(), flightID, seatClass, numPassengers, boardingString, totalPrice, origin, "confirmed");
