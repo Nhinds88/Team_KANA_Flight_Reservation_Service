@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class flightRestController {
     //for holding the origin name
-    static final String ORIGIN = "external";
+    static final String ORIGIN = "planner";
 
     @Autowired
     private FlightService flightService;
@@ -59,6 +59,23 @@ public class flightRestController {
 
         Reservation reservation = flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
 
+        if (reservation == null) {
+            return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+        }
+    }
+    
+    //getMapping option to book reservation
+        @GetMapping("/api/flight/reservation2/{email}/{seatClass}/{numPassengers}/{prioBoarding}/{flightID}")
+    public ResponseEntity<Reservation> createReservation2(
+    		@PathVariable("email") String email,
+    		@PathVariable("seatClass") String seatClass,
+    	    @PathVariable("numPassengers") int numPassengers,
+    	    @PathVariable("prioBoarding") boolean prioBoarding,
+            @PathVariable("flightID") int flightID
+    ) {
+        Reservation reservation = flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
         if (reservation == null) {
             return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
         } else {
