@@ -17,13 +17,14 @@ public class FlightController {
 
     @PostMapping("/flight/reservation")
     public String createReservation(
+            @RequestParam("bookEmail") String email,
             @RequestParam("departureAirport") String departureAirport,
             @RequestParam("arrivalAirport") String arrivalAirport,
             @RequestParam("departureDate") String departureDate,
             @RequestParam("seatClass") String seatClass,
             @RequestParam("numPassengers") int numPassengers,
-            @RequestParam("prioBoarding") boolean prioBoarding,
             @RequestParam("flightID") int flightID,
+            @RequestParam(value = "prioBoarding", defaultValue = "false") boolean prioBoarding,
             Model model) {
 
         model.addAttribute("departureAirport", departureAirport);
@@ -33,8 +34,7 @@ public class FlightController {
         model.addAttribute("numPassengers", numPassengers);
         model.addAttribute("prioBoarding", prioBoarding);
 
-        flightService.requestReservation(departureAirport, arrivalAirport,
-                departureDate, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
+        flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
 
         return "request_reservation";
     }

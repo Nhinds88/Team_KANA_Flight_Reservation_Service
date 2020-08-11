@@ -1,15 +1,13 @@
 package cst438flights.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="reservation")
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="reservationid")
     private Integer reservationid;
     @Column(name="customerid")
@@ -31,6 +29,17 @@ public class Reservation {
 
     public Reservation() {
         this(9999,9999,9999, "first", 1, "no", 300f, "kana", "confirmed");
+    }
+
+    public Reservation(Integer customerid, Integer departureflightid, String seatclass, Integer numpassengers, String priorityboarding, Float totalprice, String reservationorigin, String bookingstatus) {
+        this.customerid = customerid;
+        this.departureflightid = departureflightid;
+        this.seatclass = seatclass;
+        this.numpassengers = numpassengers;
+        this.priorityboarding = priorityboarding;
+        this.totalprice = totalprice;
+        this.reservationorigin = reservationorigin;
+        this.bookingstatus = bookingstatus;
     }
 
     public Reservation(Integer reservationid, Integer customerid, Integer departureflightid, String seatclass, Integer numpassengers, String priorityboarding, Float totalprice, String reservationorigin, String bookingstatus) {
