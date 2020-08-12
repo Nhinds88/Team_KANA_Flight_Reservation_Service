@@ -5,7 +5,11 @@ import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.java2d.pipe.SpanShapeRenderer;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +29,10 @@ public class FlightService {
 
     @Autowired
     private FanoutExchange fanout;
+
+    //date formatter for conversion of date types
+    static private SimpleDateFormat travelDate = new SimpleDateFormat("MM/dd/yyyy");
+    static private SimpleDateFormat sqlDate = new SimpleDateFormat("yyyy-MM-dd");
 
     public List<Flight> getFlightInfoArrival(String arrivalairport) {
 
@@ -48,8 +56,31 @@ public class FlightService {
         return flights;
     }
 
-    public List<Flight> getAvailableFights(String departureAirport, String arrivalairport) {
-        return flightRepository.findByDepartureArrivalAirport(departureAirport,arrivalairport);
+    public List<Flight> getAvailableFights(String departureAirport, String arrivalAirport, String dateStr) {
+        if(dateStr == "") {
+            return flightRepository.findByDepartureArrivalAirport(departureAirport, arrivalAirport);
+        } else {
+            try {
+                System.out.println(dateStr);
+                //set up calendar
+                Calendar cal = Calendar.getInstance();
+                //parse date
+                cal.setTime(travelDate.parse(dateStr));
+                //save the starting date as a string
+
+                Date startDate = cal.getTime();
+                //add one day
+                cal.add(Calendar.DATE, 1);
+                //save new date as a string
+                Date endDate = cal.getTime();
+
+                return flightRepository.findByDepartureArrivalAirport(departureAirport, arrivalAirport, startDate, endDate);
+            } catch (Exception e) {
+                System.out.println(e);
+                System.out.println("An error occured");
+                return null;
+            }
+        }
         /*
         if (flights.size() == 0) {
             return null;
