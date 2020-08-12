@@ -37,7 +37,7 @@ public class FlightService {
         return flights;
     }
 
-    public List<Flight> getFlightInfoDepature(String departureairport) {
+    public List<Flight> getFlightInfoDeparture(String departureairport) {
 
         List<Flight> flights = flightRepository.findByDepartureairport(departureairport);
 

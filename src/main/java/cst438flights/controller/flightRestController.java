@@ -1,19 +1,17 @@
 package cst438flights.controller;
 
 import cst438flights.domain.Flight;
-import cst438flights.domain.FlightInfo;
 import cst438flights.domain.Reservation;
 import cst438flights.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class flightRestController {
+public class FlightRestController {
     //for holding the origin name
     static final String ORIGIN = "planner";
 
@@ -37,7 +35,7 @@ public class flightRestController {
     public ResponseEntity<List<Flight>> getFlightDeparture(
             @PathVariable("departureAirport") String departureAirport) {
 
-        List<Flight> depatureFlights = flightService.getFlightInfoDepature(departureAirport);
+        List<Flight> depatureFlights = flightService.getFlightInfoDeparture(departureAirport);
 
         if (depatureFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
