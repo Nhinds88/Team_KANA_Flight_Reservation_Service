@@ -26,6 +26,9 @@
     </select>
     <br />
 
+    <input type="date" name="lookupDate" id="lookupDate" onchange="dateUpdate()">
+    <br />
+
     <select name="flightID" id="flightSelect" onChange="updateClassSeats()"required>
         <option value="">Select a City Above First</option>
     </select>
@@ -69,12 +72,18 @@
 
 <script>
     let url = window.location.origin;
+
     let departureCity = "";
     let arrivalCity = "";
+    let lookupDate = "";
+
     const flightDropDown = document.getElementById("flightSelect");
     const deafultOption = document.createElement("option");
     deafultOption.text = "Select a Flight Date";
     deafultOption.value = "";
+    const noFlights = document.createElement("option");
+    noFlights.text = "No flights, Select another Date";
+    noFlights.value = "";
 
     //should be updated to an object for faster lookup
     let currentFlights = [];
@@ -90,16 +99,37 @@
     }
 
     async function getFlights() {
-        const response = await fetch(url + `/api/flights/${departureCity}/${arrivalCity}`, {
-            method: 'GET',
-            mode: 'same-origin',
-        });
-        return response.json();
+        let data = {
+            departureAirport: departureCity,
+            arrivalAirport: arrivalCity,
+            date: lookupDate
+        }
+        console.log(data);
+        try {
+            const response = await fetch(url + `/api/flights?${new URLSearchParams(data)}`, {
+                method: 'POST',
+                mode: 'same-origin',
+            }).then(function(response) {
+                if(!response.ok) {
+                    throw new Error("No flights!");
+                } else {
+                    return response;
+                }
+            });
+            return response.json();
+        } catch (e) {
+            console.log("No Flights");
+            flightDropDown.innerHTML = "";
+            flightDropDown.appendChild(noFlights);
+            return null;
+        }
     }
 
     function populateFlights() {
         getFlights()
         .then(flights => {
+            console.log("Flights: ", flights);
+            if(!flights) return;
             //clear previous drop down options
             flightDropDown.innerHTML = "";
             flightDropDown.appendChild(deafultOption);
@@ -129,6 +159,20 @@
     function arrivalUpdate() {
         arrivalCity = document.getElementById("arrivalAirport").value;
         console.log(arrivalCity);
+        if(departureCity && arrivalCity) {
+            populateFlights();
+        }
+    }
+    function dateUpdate() {
+        lookupDate = document.getElementById("lookupDate").value;
+        console.log(lookupDate);
+        let dateObj = new Date(lookupDate);
+        let tzDifference = dateObj.getTimezoneOffset();
+        dateObj = new Date(dateObj.getTime() + tzDifference * 60 * 1000);
+        console.log(dateObj);
+        lookupDate = dateObj.toLocaleDateString();
+
+        console.log(lookupDate);
         if(departureCity && arrivalCity) {
             populateFlights();
         }
