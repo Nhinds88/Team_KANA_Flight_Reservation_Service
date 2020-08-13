@@ -131,15 +131,14 @@ public class FlightServiceTest {
         assertThat(resultFlight).isEqualTo(expectedFlight);
     }
 
-    /*
     @Test
     public void requestReservationNewCustomerTest() {
         Customer customer = new Customer("test@person.email");
         Customer savedCustomer = new Customer("test@person.email");
         savedCustomer.setCustomer_ID(0);
         Flight flight = new Flight(0, "departureAirport", "arrivalAirport", new Timestamp(2323223232L), 5, 5, 5, "on time");
-        Reservation reservation = new Reservation(1, 0, "first", 2, "no", 600f, "planner", "confirmed");
-        Reservation savedReservation = new Reservation(0,1, 0, "first", 2, "no", 600f, "planner", "confirmed");
+        Reservation reservation = new Reservation(0, 0, "first", 2, "no", 600f, "planner", "confirmed");
+        Reservation savedReservation = new Reservation(0,0, 0, "first", 2, "no", 600f, "planner", "confirmed");
 
         System.out.println(customer);
 
@@ -149,12 +148,11 @@ public class FlightServiceTest {
         given(reservationRepository.save(reservation)).willReturn(savedReservation);
 
         Reservation resultReservation = flightService.requestReservation("test@person.email", "first", 2, false, "planner", 0);
-        Reservation testReservation = new Reservation(0, 1, 0, "first", 2, "no", 600f, "planner", "confirmed");
+        Reservation testReservation = new Reservation(0, 0, 0, "first", 2, "no", 600f, "planner", "confirmed");
         assertThat(resultReservation).isEqualTo(testReservation);
 
         Flight resultFlight = flightRepository.findByFlightid(0);
         Flight expectedFlight = new Flight(0, "departureAirport", "arrivalAirport", new Timestamp(2323223232L), 3, 5, 5, "on time");
         assertThat(resultFlight).isEqualTo(expectedFlight);
     }
-     */
 }

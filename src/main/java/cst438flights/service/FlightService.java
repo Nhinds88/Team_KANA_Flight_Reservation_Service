@@ -104,9 +104,7 @@ public class FlightService {
             //make a new customer
             customer = new Customer(email);
             //save and update that customer
-            System.out.println(customer);
             customer = customerRepository.save(customer);
-            System.out.println(customer);
         }
 
         String boardingString = (priorityBoarding ? "yes" : "no");
@@ -129,9 +127,7 @@ public class FlightService {
         //make the reservation
         Reservation reservation = new Reservation(customer.getCustomerid(), flightID, seatClass, numPassengers, boardingString, totalPrice, origin, "confirmed");
         //save and update the reservation
-        System.out.println(reservation);
         reservation = reservationRepository.save(reservation);
-        System.out.println(reservation);
         return reservation;
         //return null;
     }
