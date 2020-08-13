@@ -1,11 +1,13 @@
 package cst438flights.controller;
 
 import cst438flights.domain.Flight;
+import cst438flights.domain.FlightInfo;
 import cst438flights.domain.Reservation;
 import cst438flights.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class FlightRestController {
         if (arrivalFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(arrivalFlights, HttpStatus.OK);
+            return new ResponseEntity<List<Flight>>(arrivalFlights, HttpStatus.OK);
         }
     }
 
@@ -44,13 +46,41 @@ public class FlightRestController {
         }
     }
 
-    @GetMapping("/api/flights/{departureAirport}/{arrivalAirport}")
+    @GetMapping(value = {"/api/flights/{departureAirport}/{arrivalAirport}"})
     public ResponseEntity<List<Flight>> getAvailableFlights(
             @PathVariable("departureAirport") String departureAirport,
-            @PathVariable("arrivalAirport") String arrivalAirport
+            @PathVariable("arrivalAirport") String arrivalAirport,
+            String date
+            ) {
+        if(date == null) {
+            date = "";
+        }
+
+        List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport, date);
+        System.out.println(flightInfo);
+
+        if (flightInfo == null) {
+            return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Flight>>(flightInfo, HttpStatus.OK);
+        }
+    }
+
+       @GetMapping(value = {"/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}"})
+    public ResponseEntity<List<Flight>> getAvailableFlights(
+            @PathVariable("departureAirport") String departureAirport,
+            @PathVariable("arrivalAirport") String arrivalAirport,
+            @PathVariable("month") String month,
+            @PathVariable("day") String day,
+            @PathVariable("year") String year
             ) {
 
-        List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport);
+    	String date = month +"/"+ day+"/"+ year;
+
+    	System.out.println("assembled date" + date);
+
+        List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport, date);
+        System.out.println(flightInfo);
 
         if (flightInfo == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
@@ -60,11 +90,14 @@ public class FlightRestController {
     }
 
     @PostMapping("/api/flights")
-    public ResponseEntity<List<Flight>> getFlightsDepartureArrival(
+    public ResponseEntity<List<Flight>> getAvailableFlightsPost(
             @RequestParam("departureAirport") String departureAirport,
-            @RequestParam("arrivalAirport") String arrivalAirport
+            @RequestParam("arrivalAirport") String arrivalAirport,
+            @RequestParam("date") String date
     ) {
-        return getAvailableFlights(departureAirport, arrivalAirport);
+        System.out.println(departureAirport);
+        System.out.println(arrivalAirport);
+        return getAvailableFlights(departureAirport, arrivalAirport, date);
     }
 
 
