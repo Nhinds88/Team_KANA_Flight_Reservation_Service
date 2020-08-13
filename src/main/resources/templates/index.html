@@ -165,14 +165,14 @@
     }
     function dateUpdate() {
         lookupDate = document.getElementById("lookupDate").value;
-        console.log(lookupDate);
         let dateObj = new Date(lookupDate);
+        //get the timezone offset
         let tzDifference = dateObj.getTimezoneOffset();
+        //add to fix the date so it isnt off by one
         dateObj = new Date(dateObj.getTime() + tzDifference * 60 * 1000);
-        console.log(dateObj);
+
         lookupDate = dateObj.toLocaleDateString();
 
-        console.log(lookupDate);
         if(departureCity && arrivalCity) {
             populateFlights();
         }
