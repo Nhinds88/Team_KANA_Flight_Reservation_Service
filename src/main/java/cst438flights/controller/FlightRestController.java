@@ -27,7 +27,7 @@ public class FlightRestController {
         if (arrivalFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<List<Flight>>(arrivalFlights, HttpStatus.OK);
+            return new ResponseEntity<>(arrivalFlights, HttpStatus.OK);
         }
     }
 
@@ -35,12 +35,12 @@ public class FlightRestController {
     public ResponseEntity<List<Flight>> getFlightDeparture(
             @PathVariable("departureAirport") String departureAirport) {
 
-        List<Flight> depatureFlights = flightService.getFlightInfoDeparture(departureAirport);
+        List<Flight> departureFlights = flightService.getFlightInfoDeparture(departureAirport);
 
-        if (depatureFlights == null) {
+        if (departureFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<List<Flight>>(depatureFlights, HttpStatus.OK);
+            return new ResponseEntity<List<Flight>>(departureFlights, HttpStatus.OK);
         }
     }
 
@@ -51,7 +51,6 @@ public class FlightRestController {
             ) {
 
         List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport);
-        System.out.println(flightInfo);
 
         if (flightInfo == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
@@ -61,7 +60,7 @@ public class FlightRestController {
     }
 
     @PostMapping("/api/flights")
-    public ResponseEntity<List<Flight>> createReservation(
+    public ResponseEntity<List<Flight>> getFlightsDepartureArrival(
             @RequestParam("departureAirport") String departureAirport,
             @RequestParam("arrivalAirport") String arrivalAirport
     ) {
@@ -69,7 +68,7 @@ public class FlightRestController {
     }
 
 
-        @PostMapping("/api/flight/reservation")
+    @PostMapping("/api/flight/reservation")
     public ResponseEntity<Reservation> createReservation(
             @RequestParam("email") String email,
             @RequestParam("seatClass") String seatClass,

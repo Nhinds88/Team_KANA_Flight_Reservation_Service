@@ -1,6 +1,7 @@
 package cst438flights.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="reservation")
@@ -118,8 +119,27 @@ public class Reservation {
     public void setReservationorigin(String reservationOrigin) {
         this.reservationorigin = reservationOrigin;
     }
-    
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(reservationid, that.reservationid) &&
+                Objects.equals(customerid, that.customerid) &&
+                Objects.equals(departureflightid, that.departureflightid) &&
+                Objects.equals(seatclass, that.seatclass) &&
+                Objects.equals(numpassengers, that.numpassengers) &&
+                Objects.equals(priorityboarding, that.priorityboarding) &&
+                Objects.equals(totalprice, that.totalprice) &&
+                Objects.equals(reservationorigin, that.reservationorigin) &&
+                Objects.equals(bookingstatus, that.bookingstatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reservationid, customerid, departureflightid, seatclass, numpassengers, priorityboarding, totalprice, reservationorigin, bookingstatus);
+    }
 
     public String getBookingStatus() {
 		return bookingstatus;
