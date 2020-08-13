@@ -167,6 +167,9 @@
         lookupDate = document.getElementById("lookupDate").value;
         console.log(lookupDate);
         let dateObj = new Date(lookupDate);
+        let tzDifference = dateObj.getTimezoneOffset();
+        dateObj = new Date(dateObj.getTime() + tzDifference * 60 * 1000);
+        console.log(dateObj);
         lookupDate = dateObj.toLocaleDateString();
 
         console.log(lookupDate);
