@@ -41,8 +41,8 @@ public class CustomerService {
 
         return flights;
     }
-    
-    
+
+
     //Modified from above code
     public List<ReservationFlightInfo> getPreviousReservations(String email) {
 
@@ -60,8 +60,8 @@ public class CustomerService {
             Reservation r = reservations.get(i);
             Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
-            
-       
+
+
             ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus(), r.getReservationorigin());
             String testStatus = tempInfo.getBookingStatus();
             String testOrigin = tempInfo.getReservationOrigin();
@@ -74,11 +74,11 @@ public class CustomerService {
                 System.out.println("Reservation ID: " + tempInfo.getReservationId());
             }
         }
-        
+
         System.out.println("Reservation Info List Contents:" + reservationInfo);
         return reservationInfo;
     }
-    
+
     //Modified rest version of getPreviousReservations
     public List<ReservationFlightInfo> getPreviousReservationsRest(String email) {
 
@@ -96,8 +96,8 @@ public class CustomerService {
             Reservation r = reservations.get(i);
             Flight previousFlight = flightRepository.findByFlightid(r.getDepartureflightid());
             System.out.println("Flight Departure Airport (Flight) " +  previousFlight.getDepartureairport());
-            
-       
+
+
             ReservationFlightInfo tempInfo = new ReservationFlightInfo(r.getReservationid(), previousFlight.getFlightid(), previousFlight.getDepartureairport(), previousFlight.getArrivalairport(), previousFlight.getDeparturedate(), previousFlight.getStatus(), r.getBookingStatus(), r.getReservationorigin());
             String testStatus = tempInfo.getBookingStatus();
             String testOrigin = tempInfo.getReservationOrigin();
@@ -108,21 +108,23 @@ public class CustomerService {
                 reservationInfo.add(tempInfo);
                 System.out.println("Flight Departure Airport (FlightInfo) " + tempInfo.getDepartureAirport());
                 System.out.println("Reservation ID: " + tempInfo.getReservationId());
+            } else {
+                System.out.println("Not confirmed or planner");
             }
         }
-        
+
         System.out.println("Reservation Info List Contents:" + reservationInfo);
         return reservationInfo;
     }
-    
-    
+
+
     public void updateStatus(String flightToCancel) {
         //System.out.println("Flight to cancel " + flightToCancel);
         int flightNumber = Integer.parseInt(flightToCancel);
         //System.out.println("Flight to cancel " + flightNumber);
         Reservation reservation = reservationRepository.findByReservationid(flightNumber);
         reservation.setBookingStatus("cancelled");
-        
+
         //Add cancelled seats back to respective seat pool
         String seatClass = reservation.getSeatclass();
         int numPassengers = reservation.getNumpassengers();
@@ -130,13 +132,13 @@ public class CustomerService {
         if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() + numPassengers);
         else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass() + numPassengers);
         else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()+ numPassengers);
-        
+
         //Save Changes
         flightRepository.save(flight);
         reservationRepository.save(reservation);
 
     }
-    
+
     //Rest version updateStatus
     public void updateStatusRest(String flightToCancel) {
         //System.out.println("Flight to cancel " + flightToCancel);
@@ -145,23 +147,23 @@ public class CustomerService {
         Reservation reservation = reservationRepository.findByReservationid(flightNumber);
         //If reservation is null, do not attempt update
         if (reservation == null) {
-        	return;
+            return;
         }
-        String origin = reservation.getReservationorigin(); 
+        String origin = reservation.getReservationorigin();
         //Only attempts cancellation if planner
-        if (origin.equals("planner")) {	
-        reservation.setBookingStatus("cancelled");
-        
-        //Add cancelled seats back to respective seat pool
-        String seatClass = reservation.getSeatclass();
-        int numPassengers = reservation.getNumpassengers();
-        Flight flight = flightRepository.findByFlightid(reservation.getDepartureflightid());
-        if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() + numPassengers);
-        else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass() + numPassengers);
-        else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()+ numPassengers);
-        //Save changes
-        flightRepository.save(flight);
-        reservationRepository.save(reservation);
+        if (origin.equals("planner")) {
+            reservation.setBookingStatus("cancelled");
+
+            //Add cancelled seats back to respective seat pool
+            String seatClass = reservation.getSeatclass();
+            int numPassengers = reservation.getNumpassengers();
+            Flight flight = flightRepository.findByFlightid(reservation.getDepartureflightid());
+            if(seatClass.equals("economy")) flight.setEconomyclass(flight.getEconomyclass() + numPassengers);
+            else if(seatClass.equals("business")) flight.setBusinessclass(flight.getBusinessclass() + numPassengers);
+            else if(seatClass.equals("first")) flight.setFirstclass(flight.getFirstclass()+ numPassengers);
+            //Save changes
+            flightRepository.save(flight);
+            reservationRepository.save(reservation);
         }
     }
 }

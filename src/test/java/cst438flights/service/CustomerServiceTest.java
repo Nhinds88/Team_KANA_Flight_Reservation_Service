@@ -75,4 +75,89 @@ public class CustomerServiceTest {
 
         assertThat(resultReservationFlightInfo.toString()).isEqualTo(expectedReservationFlightInfo.toString());
     }
+
+    @Test
+    public void getPrevReservationRestTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        List<ReservationFlightInfo> resultReservationFlightInfo = customerService.getPreviousReservationsRest("jedi@lightside.com");
+        List<ReservationFlightInfo> expectedReservationFlightInfo = new ArrayList<>();
+        expectedReservationFlightInfo.add(new ReservationFlightInfo(reservation.getReservationid(), flight.getFlightid(), flight.getDepartureairport(),
+                flight.getArrivalairport(), flight.getDeparturedate(), flight.getStatus(), reservation.getBookingStatus(), reservation.getReservationorigin()));
+
+        assertThat(resultReservationFlightInfo).isEqualTo(expectedReservationFlightInfo);
+    }
+
+    @Test
+    public void updateStatusTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 5, 5, 5, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        //flightRepository.save(flight);
+        //reservationRepository.save(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(reservationRepository.findByReservationid(0)).willReturn(reservation);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        customerService.updateStatus("0");
+
+        Flight resultFlight = flightRepository.findByFlightid(0);
+        Reservation resultReservation = reservationRepository.findByReservationid(0);
+
+        Flight expectedFlight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 6, 5, 5, "on time");
+        Reservation expectedReservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "cancelled");
+
+        assertThat(resultFlight).isEqualTo(expectedFlight);
+        assertThat(resultReservation).isEqualTo(expectedReservation);
+    }
+
+    @Test
+    public void updateStatusRestTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 5, 5, 5, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        //flightRepository.save(flight);
+        //reservationRepository.save(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(reservationRepository.findByReservationid(0)).willReturn(reservation);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        customerService.updateStatusRest("0");
+
+        Flight resultFlight = flightRepository.findByFlightid(0);
+        Reservation resultReservation = reservationRepository.findByReservationid(0);
+
+        Flight expectedFlight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 6, 5, 5, "on time");
+        Reservation expectedReservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "cancelled");
+
+        assertThat(resultFlight).isEqualTo(expectedFlight);
+        assertThat(resultReservation).isEqualTo(expectedReservation);
+    }
 }

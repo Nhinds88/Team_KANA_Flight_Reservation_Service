@@ -46,7 +46,7 @@ public class FlightRestController {
         }
     }
 
-    @GetMapping(value = {"/api/flights/{departureAirport}/{arrivalAirport}"})
+    @GetMapping("/api/flights/{departureAirport}/{arrivalAirport}")
     public ResponseEntity<List<Flight>> getAvailableFlights(
             @PathVariable("departureAirport") String departureAirport,
             @PathVariable("arrivalAirport") String arrivalAirport,
@@ -66,7 +66,7 @@ public class FlightRestController {
         }
     }
 
-    @GetMapping(value = {"/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}"})
+    @GetMapping("/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}")
     public ResponseEntity<List<Flight>> getAvailableFlights(
             @PathVariable("departureAirport") String departureAirport,
             @PathVariable("arrivalAirport") String arrivalAirport,
