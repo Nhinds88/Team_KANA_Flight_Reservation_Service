@@ -126,7 +126,7 @@ public class FlightRestControllerTest {
         flight.add(f1);
         flight.add(f2);
         // give flight
-        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport")).willReturn((flight));
+        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport", "")).willReturn((flight));
         // response from mvc
         MockHttpServletResponse response = mvc.perform(get("/api/flights/test_departure_airport/test_arrival_airport")).andReturn().getResponse();
 
@@ -157,11 +157,12 @@ public class FlightRestControllerTest {
         flight.add(f1);
         flight.add(f2);
         // give flight
-        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport")).willReturn((flight));
+        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport", "")).willReturn((flight));
         // response from mvc
         MockHttpServletResponse response = mvc.perform(post("/api/flights")
                 .param("departureAirport","test_departure_airport")
                 .param("arrivalAirport", "test_arrival_airport")
+                .param("date", "")
         ).andReturn().getResponse();
 
         String responseString = mvc.perform(get("/api/flights/test_departure_airport/test_arrival_airport")).andReturn().getResponse().getContentAsString();

@@ -24,7 +24,7 @@ public class FlightRestController {
     public ResponseEntity<List<Flight>> getFlightArrival(
             @PathVariable("arrivalAirport") String arrivalAirport) {
 
-         List<Flight> arrivalFlights = flightService.getFlightInfoArrival(arrivalAirport);
+        List<Flight> arrivalFlights = flightService.getFlightInfoArrival(arrivalAirport);
 
         if (arrivalFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
@@ -51,7 +51,7 @@ public class FlightRestController {
             @PathVariable("departureAirport") String departureAirport,
             @PathVariable("arrivalAirport") String arrivalAirport,
             String date
-            ) {
+    ) {
         if(date == null) {
             date = "";
         }
@@ -66,18 +66,18 @@ public class FlightRestController {
         }
     }
 
-       @GetMapping(value = {"/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}"})
+    @GetMapping(value = {"/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}"})
     public ResponseEntity<List<Flight>> getAvailableFlights(
             @PathVariable("departureAirport") String departureAirport,
             @PathVariable("arrivalAirport") String arrivalAirport,
             @PathVariable("month") String month,
             @PathVariable("day") String day,
             @PathVariable("year") String year
-            ) {
+    ) {
 
-    	String date = month +"/"+ day+"/"+ year;
+        String date = month +"/"+ day+"/"+ year;
 
-    	System.out.println("assembled date" + date);
+        System.out.println("assembled date" + date);
 
         List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport, date);
         System.out.println(flightInfo);
@@ -118,14 +118,14 @@ public class FlightRestController {
             return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
         }
     }
-    
+
     //getMapping option to book reservation
     @GetMapping("/api/flight/reservation2/{email}/{seatClass}/{numPassengers}/{prioBoarding}/{flightID}")
     public ResponseEntity<Reservation> createReservation2(
-    		@PathVariable("email") String email,
-    		@PathVariable("seatClass") String seatClass,
-    	    @PathVariable("numPassengers") int numPassengers,
-    	    @PathVariable("prioBoarding") boolean prioBoarding,
+            @PathVariable("email") String email,
+            @PathVariable("seatClass") String seatClass,
+            @PathVariable("numPassengers") int numPassengers,
+            @PathVariable("prioBoarding") boolean prioBoarding,
             @PathVariable("flightID") int flightID
     ) {
         Reservation reservation = flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);

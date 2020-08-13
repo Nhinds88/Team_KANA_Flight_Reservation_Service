@@ -106,7 +106,7 @@ public class FlightServiceTest {
 
         given(flightRepository.findByDepartureArrivalAirport("departureAirport", "arrivalAirport")).willReturn(flightList);
 
-        List<Flight> resultFlightList = flightService.getAvailableFights("departureAirport", "arrivalAirport");
+        List<Flight> resultFlightList = flightService.getAvailableFights("departureAirport", "arrivalAirport", null);
 
         assertThat(resultFlightList).isEqualTo(flightList);
     }

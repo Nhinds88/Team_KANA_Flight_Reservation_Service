@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cst438flights.domain.*;
 import cst438flights.service.CustomerService;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
