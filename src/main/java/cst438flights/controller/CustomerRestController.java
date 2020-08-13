@@ -21,46 +21,46 @@ public class CustomerRestController {
     @Autowired
     private ReservationRepository reservationRepository;
 
-     @GetMapping("api/previous_flights/{email}")
+    @GetMapping("api/previous_flights/{email}")
     public ResponseEntity<List<FlightInfo>> getCustomerPreviousFlights(
             @PathVariable("email") String email) {
 
-         List<FlightInfo> previousFlights = customerService.getPreviousFlights(email);
+        List<FlightInfo> previousFlights = customerService.getPreviousFlights(email);
 
-         if (previousFlights == null) {
-             return new ResponseEntity<List<FlightInfo>>(HttpStatus.NOT_FOUND);
-         } else {
-             return new ResponseEntity<List<FlightInfo>>(previousFlights, HttpStatus.OK);
-         }
+        if (previousFlights == null) {
+            return new ResponseEntity<List<FlightInfo>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<FlightInfo>>(previousFlights, HttpStatus.OK);
+        }
     }
 
     @GetMapping("api/previous_reservation/{email}")
     public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservationsRest(
             @PathVariable("email") String email) {
 
-         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservationsRest(email);
+        List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservationsRest(email);
 
-         if (previousReservation == null) {
-             return new ResponseEntity<List<ReservationFlightInfo>>(HttpStatus.NOT_FOUND);
-         } else {
-             return new ResponseEntity<List<ReservationFlightInfo>>(previousReservation, HttpStatus.OK);
-         }
+        if (previousReservation == null) {
+            return new ResponseEntity<List<ReservationFlightInfo>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<ReservationFlightInfo>>(previousReservation, HttpStatus.OK);
+        }
     }
 
     @GetMapping("api/cancel_reservation/{reservationID}")
     public ResponseEntity<Reservation> cancelReservationRest(
             @PathVariable("reservationID") Integer reservationID) {
 
-         String res_ID_string = Integer.toString(reservationID);
-         customerService.updateStatusRest(res_ID_string); // Cancels the reservation
-         Reservation reservation = reservationRepository.findByReservationid(reservationID);
-         
-         //prevents non-planner/non-existent flight cancellations
-         if (reservation == null || (reservation.getReservationorigin()).equals("kana")) {
-             return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
-             
-         } else {
-             return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
-         }
+        String res_ID_string = Integer.toString(reservationID);
+        customerService.updateStatusRest(res_ID_string); // Cancels the reservation
+        Reservation reservation = reservationRepository.findByReservationid(reservationID);
+
+        //prevents non-planner/non-existent flight cancellations
+        if (reservation == null || (reservation.getReservationorigin()).equals("kana")) {
+            return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
+
+        } else {
+            return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+        }
     }
 }
