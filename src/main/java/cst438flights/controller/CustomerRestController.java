@@ -21,7 +21,7 @@ public class CustomerRestController {
     @Autowired
     private ReservationRepository reservationRepository;
 
-     @GetMapping("api/previous_flights/{email}")
+     @GetMapping("/api/previous_flights/{email}")
     public ResponseEntity<List<FlightInfo>> getCustomerPreviousFlights(
             @PathVariable("email") String email) {
 
@@ -34,7 +34,7 @@ public class CustomerRestController {
          }
     }
 
-    @GetMapping("api/previous_reservation/{email}")
+    @GetMapping("/api/previous_reservation/{email}")
     public ResponseEntity<List<ReservationFlightInfo>> getCustomerPreviousReservationsRest(
             @PathVariable("email") String email) {
 
@@ -47,7 +47,7 @@ public class CustomerRestController {
          }
     }
 
-    @GetMapping("api/cancel_reservation/{reservationID}")
+    @GetMapping("/api/cancel_reservation/{reservationID}")
     public ResponseEntity<Reservation> cancelReservationRest(
             @PathVariable("reservationID") Integer reservationID) {
 
