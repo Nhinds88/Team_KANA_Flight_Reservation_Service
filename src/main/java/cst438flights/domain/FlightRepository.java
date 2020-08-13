@@ -21,7 +21,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             @Param("arrivalAirport") String arrivalAirport);
 
     @Query("SELECT f FROM Flight f " +
-            "WHERE f.departureairport = :arrivalAirport AND f.arrivalairport = :departureAirport " +
+            "WHERE f.departureairport = :departureAirport AND f.arrivalairport = :arrivalAirport " +
             "AND f.departuredate BETWEEN :startDate AND :endDate ")
     List<Flight> findByDepartureArrivalAirport(
             @Param("departureAirport") String departureAirport,

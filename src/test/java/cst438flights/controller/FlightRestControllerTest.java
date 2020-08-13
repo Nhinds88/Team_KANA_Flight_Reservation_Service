@@ -149,6 +149,39 @@ public class FlightRestControllerTest {
     }
 
     @Test
+    public void getAvailableFlightsDateInfoGET() throws Exception {
+        Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        System.out.println(new Timestamp(2323223232L));
+
+        List<Flight> flight = new ArrayList<Flight>();
+        flight.add(f1);
+        flight.add(f2);
+        // give flight
+        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport", "01/27/1970")).willReturn((flight));
+        // response from mvc
+        MockHttpServletResponse response = mvc.perform(get("/api/flights2/test_departure_airport/test_arrival_airport/01/27/1970")).andReturn().getResponse();
+
+        String responseString = mvc.perform(get("/api/flights2/test_departure_airport/test_arrival_airport/01/27/1970")).andReturn().getResponse().getContentAsString();
+        // check the status
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Flight> returnFlight = mapper.readValue(responseString, new TypeReference<List<Flight>>() {});
+
+        Flight expected_f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight expected_f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        List<Flight> expectedFlight = new ArrayList<Flight>();
+        expectedFlight.add(expected_f1);
+        expectedFlight.add(expected_f2);
+
+        // final assert test
+        assertThat(returnFlight).isEqualTo(expectedFlight);
+    }
+
+    @Test
     public void getAvailableFlightsInfoPOST() throws Exception {
         Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
         Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");

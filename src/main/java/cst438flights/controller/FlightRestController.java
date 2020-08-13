@@ -95,9 +95,15 @@ public class FlightRestController {
             @RequestParam("arrivalAirport") String arrivalAirport,
             @RequestParam("date") String date
     ) {
-        System.out.println(departureAirport);
-        System.out.println(arrivalAirport);
-        return getAvailableFlights(departureAirport, arrivalAirport, date);
+
+        List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport, date);
+        System.out.println(flightInfo);
+
+        if (flightInfo == null) {
+            return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Flight>>(flightInfo, HttpStatus.OK);
+        }
     }
 
 
