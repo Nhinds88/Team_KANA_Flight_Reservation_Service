@@ -65,6 +65,29 @@ public class flightRestController {
             return new ResponseEntity<List<Flight>>(flightInfo, HttpStatus.OK);
         }
     }
+    
+       @GetMapping(value = {"/api/flights2/{departureAirport}/{arrivalAirport}/{month}/{day}/{year}"})
+    public ResponseEntity<List<Flight>> getAvailableFlights(
+            @PathVariable("departureAirport") String departureAirport,
+            @PathVariable("arrivalAirport") String arrivalAirport,
+            @PathVariable("month") String month,
+            @PathVariable("day") String day,
+            @PathVariable("year") String year
+            ) {
+        
+    	String date = month +"/"+ day+"/"+ year;
+    	
+    	System.out.println("assembled date" + date);
+
+        List<Flight> flightInfo = flightService.getAvailableFights(departureAirport, arrivalAirport, date);
+        System.out.println(flightInfo);
+
+        if (flightInfo == null) {
+            return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Flight>>(flightInfo, HttpStatus.OK);
+        }
+    }
 
     @PostMapping("/api/flights")
     public ResponseEntity<List<Flight>> getAvailableFlightsPost(
