@@ -31,6 +31,9 @@
     </select>
     <br />
 
+    <input type="date" name="lookupDate" id="lookupDate" onchange="dateUpdate()">
+    <br />
+
     <select name="flightID" id="flightSelect" onChange="updateClassSeats()"required>
         <option value="">Select a City Above First</option>
     </select>
@@ -74,12 +77,18 @@
 
 <script>
     let url = window.location.origin;
+
     let departureCity = "";
     let arrivalCity = "";
+    let lookupDate = "";
+
     const flightDropDown = document.getElementById("flightSelect");
     const deafultOption = document.createElement("option");
     deafultOption.text = "Select a Flight Date";
     deafultOption.value = "";
+    const noFlights = document.createElement("option");
+    noFlights.text = "No flights, Select another Date";
+    noFlights.value = "";
 
     //should be updated to an object for faster lookup
     let currentFlights = [];
@@ -89,22 +98,43 @@
     const economyClassSeats = document.getElementById("economyClassSeats");
 
     const seatsAvailable = {
-        firstClass: 0,
-        businessClass: 0,
-        economyClass: 0,
+        first: 0,
+        business: 0,
+        economy: 0,
     }
 
     async function getFlights() {
-        const response = await fetch(url + `/api/flights/${departureCity}/${arrivalCity}`, {
-            method: 'GET',
-            mode: 'same-origin',
-        });
-        return response.json();
+        let data = {
+            departureAirport: departureCity,
+            arrivalAirport: arrivalCity,
+            date: lookupDate
+        }
+        console.log(data);
+        try {
+            const response = await fetch(url + `/api/flights?${new URLSearchParams(data)}`, {
+                method: 'POST',
+                mode: 'same-origin',
+            }).then(function(response) {
+                if(!response.ok) {
+                    throw new Error("No flights!");
+                } else {
+                    return response;
+                }
+            });
+            return response.json();
+        } catch (e) {
+            console.log("No Flights");
+            flightDropDown.innerHTML = "";
+            flightDropDown.appendChild(noFlights);
+            return null;
+        }
     }
 
     function populateFlights() {
         getFlights()
         .then(flights => {
+            console.log("Flights: ", flights);
+            if(!flights) return;
             //clear previous drop down options
             flightDropDown.innerHTML = "";
             flightDropDown.appendChild(deafultOption);
@@ -138,6 +168,20 @@
             populateFlights();
         }
     }
+    function dateUpdate() {
+        lookupDate = document.getElementById("lookupDate").value;
+        let dateObj = new Date(lookupDate);
+        //get the timezone offset
+        let tzDifference = dateObj.getTimezoneOffset();
+        //add to fix the date so it isnt off by one
+        dateObj = new Date(dateObj.getTime() + tzDifference * 60 * 1000);
+
+        lookupDate = dateObj.toLocaleDateString();
+
+        if(departureCity && arrivalCity) {
+            populateFlights();
+        }
+    }
 
     function replaceLastWord(string, replace) {
         let lastIndex = string.lastIndexOf(" ");
@@ -154,13 +198,13 @@
             document.getElementById("departureDate").value = flight.departuredate;
             if(flight.flightid == flightID) {
                 firstClassSeats.innerText = replaceLastWord(firstClassSeats.innerText, flight.firstclass);
-                seatsAvailable.firstClass = flight.firstclass;
+                seatsAvailable.first = flight.firstclass;
 
                 businessClassSeats.innerText = replaceLastWord(businessClassSeats.innerText, flight.businessclass);
-                seatsAvailable.businessClass = flight.businessclass;
+                seatsAvailable.business = flight.businessclass;
 
                 economyClassSeats.innerText = replaceLastWord(economyClassSeats.innerText, flight.economyclass);
-                seatsAvailable.economyClass = flight.economyclass;
+                seatsAvailable.economy = flight.economyclass;
                 break;
             }
         }
@@ -170,6 +214,7 @@
         let numSeats = document.getElementById("numPassengers").value;
         let seatClass = document.getElementById("classSelect").value;
         console.log(seatsAvailable[seatClass]);
+        console.log(numSeats);
         if(numSeats > seatsAvailable[seatClass]) {
             document.getElementById("seatError").innerText = "Not enough seats, try a different flight or class.";
             document.getElementById("numPassengers").value = 0;

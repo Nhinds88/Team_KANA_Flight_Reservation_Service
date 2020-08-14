@@ -2,6 +2,7 @@ package cst438flights.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class FlightInfo {
 
@@ -118,6 +119,26 @@ public class FlightInfo {
 
     public void setEconomyClassSeats(int economyClassSeats) {
         this.economyClassSeats = economyClassSeats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FlightInfo that = (FlightInfo) o;
+        return id == that.id &&
+                firstClassSeats == that.firstClassSeats &&
+                businessClassSeats == that.businessClassSeats &&
+                economyClassSeats == that.economyClassSeats &&
+                Objects.equals(departureAirport, that.departureAirport) &&
+                Objects.equals(arrivalAirport, that.arrivalAirport) &&
+                Objects.equals(departureDate, that.departureDate) &&
+                Objects.equals(status, that.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, departureAirport, arrivalAirport, departureDate, firstClassSeats, businessClassSeats, economyClassSeats, status);
     }
 
     @Override

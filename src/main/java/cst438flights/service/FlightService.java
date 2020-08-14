@@ -45,7 +45,7 @@ public class FlightService {
         return flights;
     }
 
-    public List<Flight> getFlightInfoDepature(String departureairport) {
+    public List<Flight> getFlightInfoDeparture(String departureairport) {
 
         List<Flight> flights = flightRepository.findByDepartureairport(departureairport);
 
@@ -61,7 +61,6 @@ public class FlightService {
             return flightRepository.findByDepartureArrivalAirport(departureAirport, arrivalAirport);
         } else {
             try {
-                System.out.println(dateStr);
                 //set up calendar
                 Calendar cal = Calendar.getInstance();
                 //parse date
@@ -129,7 +128,6 @@ public class FlightService {
         Reservation reservation = new Reservation(customer.getCustomerid(), flightID, seatClass, numPassengers, boardingString, totalPrice, origin, "confirmed");
         //save and update the reservation
         reservation = reservationRepository.save(reservation);
-        System.out.println(reservation);
         return reservation;
         //return null;
     }

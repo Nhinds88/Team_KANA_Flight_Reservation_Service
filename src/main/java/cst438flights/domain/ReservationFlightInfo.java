@@ -1,6 +1,7 @@
 package cst438flights.domain;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class ReservationFlightInfo {
 
@@ -113,7 +114,27 @@ public class ReservationFlightInfo {
 		this.reservationOrigin = reservationOrigin;
 	}
 
-	@Override
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReservationFlightInfo that = (ReservationFlightInfo) o;
+        return id == that.id &&
+                Objects.equals(reservationId, that.reservationId) &&
+                Objects.equals(departureAirport, that.departureAirport) &&
+                Objects.equals(arrivalAirport, that.arrivalAirport) &&
+                Objects.equals(departureDate, that.departureDate) &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(bookingStatus, that.bookingStatus) &&
+                Objects.equals(reservationOrigin, that.reservationOrigin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reservationId, id, departureAirport, arrivalAirport, departureDate, status, bookingStatus, reservationOrigin);
+    }
+
+    @Override
 	public String toString() {
 		return "ReservationFlightInfo [reservationId=" + reservationId + ", id=" + id + ", departureAirport="
 				+ departureAirport + ", arrivalAirport=" + arrivalAirport + ", departureDate=" + departureDate
