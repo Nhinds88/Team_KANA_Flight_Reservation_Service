@@ -27,6 +27,8 @@ public class CustomerRestController {
 
         List<FlightInfo> previousFlights = customerService.getPreviousFlights(email);
 
+        System.out.println(previousFlights.get(0));
+
         if (previousFlights == null) {
             return new ResponseEntity<List<FlightInfo>>(HttpStatus.NOT_FOUND);
         } else {
@@ -39,6 +41,8 @@ public class CustomerRestController {
             @PathVariable("email") String email) {
 
         List<ReservationFlightInfo> previousReservation = customerService.getPreviousReservationsRest(email);
+
+        System.out.println(previousReservation.get(0));
 
         if (previousReservation == null) {
             return new ResponseEntity<List<ReservationFlightInfo>>(HttpStatus.NOT_FOUND);
@@ -54,6 +58,8 @@ public class CustomerRestController {
         String res_ID_string = Integer.toString(reservationID);
         customerService.updateStatusRest(res_ID_string); // Cancels the reservation
         Reservation reservation = reservationRepository.findByReservationid(reservationID);
+
+        System.out.println(reservation);
 
         //prevents non-planner/non-existent flight cancellations
         if (reservation == null || (reservation.getReservationorigin()).equals("kana")) {

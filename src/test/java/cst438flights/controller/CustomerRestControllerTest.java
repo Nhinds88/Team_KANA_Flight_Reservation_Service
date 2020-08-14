@@ -80,6 +80,27 @@ public class CustomerRestControllerTest {
     }
 
     @Test
+    public void getCustomerPreviousFlightsNotFoundTest() throws Exception {
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        FlightInfo flightInfo = new FlightInfo(flight);
+        List<FlightInfo> flightInfoList = new ArrayList<>();
+        flightInfoList.add(flightInfo);
+
+        given(customerService.getPreviousFlights("jedi@lightside.com")).willReturn(flightInfoList);
+
+        String email = "jedi@lightside.com";
+
+        MockHttpServletResponse response = mvc.perform(get("/api/previous_flights/")).andReturn().getResponse();
+
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     public void getCustomerPreviousReservationsRestTest() throws Exception {
 
         Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
@@ -96,6 +117,8 @@ public class CustomerRestControllerTest {
 
         MockHttpServletResponse response = mvc.perform(get("/api/previous_reservation/email")).andReturn().getResponse();
 
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
         String responseString = mvc.perform(get("/api/previous_reservation/email")).andReturn().getResponse().getContentAsString();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -106,6 +129,26 @@ public class CustomerRestControllerTest {
                 flight.getArrivalairport(), flight.getDeparturedate(), flight.getStatus(), reservation.getBookingStatus(), reservation.getReservationorigin()));
 
         assertThat(reservationFlightInfoList.toString()).isEqualTo(expectedReservationFlightInfo.toString());
+    }
+
+    @Test
+    public void getCustomerPreviousReservationsRestNotFoundTest() throws Exception {
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "kana", "confirmed");
+
+        List<ReservationFlightInfo> reservationFlightInfoList = new ArrayList<>();
+        reservationFlightInfoList.add(new ReservationFlightInfo(reservation.getReservationid(), flight.getFlightid(), flight.getDepartureairport(),
+                flight.getArrivalairport(), flight.getDeparturedate(), flight.getStatus(), reservation.getBookingStatus(), reservation.getReservationorigin()));
+
+        given(customerService.getPreviousReservationsRest("jedi@lightside.com")).willReturn(reservationFlightInfoList);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/previous_reservation/")).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -121,6 +164,8 @@ public class CustomerRestControllerTest {
 
         MockHttpServletResponse response = mvc.perform(get("/api/cancel_reservation/0")).andReturn().getResponse();
 
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
         String responseString = mvc.perform(get("/api/cancel_reservation/0")).andReturn().getResponse().getContentAsString();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -129,5 +174,21 @@ public class CustomerRestControllerTest {
         Reservation expectedReservation = new Reservation(0, 0, "first", 1, "no", 300f, "Notkana", "confirmed");
 
         assertThat(resultReservation.toString()).isEqualTo(expectedReservation.toString());
+    }
+
+    @Test
+    public void cancelReservationTestNotFoundTest() throws Exception {
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "Notkana", "confirmed");
+
+        given(reservationRepository.findByReservationid(0)).willReturn(reservation);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/cancel_reservation/")).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 }

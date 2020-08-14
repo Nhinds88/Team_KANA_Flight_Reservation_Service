@@ -54,6 +54,27 @@ public class CustomerServiceTest {
     }
 
     @Test
+    public void getPrevFlightNotFoundTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "kana", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        List<FlightInfo> resultFlightInfo = customerService.getPreviousFlights("vader@sith.com");
+        List<FlightInfo> expectedFlightInfo = null;
+
+        assertThat(resultFlightInfo).isEqualTo(expectedFlightInfo);
+    }
+
+    @Test
     public void getPrevReservationTest() {
 
         Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
@@ -77,6 +98,27 @@ public class CustomerServiceTest {
     }
 
     @Test
+    public void getPrevReservationNotFoundTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "kana", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        List<ReservationFlightInfo> resultReservationFlightInfo = customerService.getPreviousReservations("vader@sith.com");
+        List<ReservationFlightInfo> expectedReservationFlightInfo = null;
+
+        assertThat(resultReservationFlightInfo).isEqualTo(expectedReservationFlightInfo);
+    }
+
+    @Test
     public void getPrevReservationRestTest() {
 
         Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
@@ -95,6 +137,27 @@ public class CustomerServiceTest {
         List<ReservationFlightInfo> expectedReservationFlightInfo = new ArrayList<>();
         expectedReservationFlightInfo.add(new ReservationFlightInfo(reservation.getReservationid(), flight.getFlightid(), flight.getDepartureairport(),
                 flight.getArrivalairport(), flight.getDeparturedate(), flight.getStatus(), reservation.getBookingStatus(), reservation.getReservationorigin()));
+
+        assertThat(resultReservationFlightInfo).isEqualTo(expectedReservationFlightInfo);
+    }
+
+    @Test
+    public void getPrevReservationRestNotFoundTest() {
+
+        Flight flight = new Flight(0, "departure", "arrival", new Timestamp(2323223232L), 0, 0, 0, "on time");
+
+        Customer customer = new Customer(0, "Skywalker", "Luke", "jedi@lightside.com", "force");
+
+        Reservation reservation = new Reservation(0, 0, "first", 1, "no", 300f, "planner", "confirmed");
+        List<Reservation> reservationList = new ArrayList<Reservation>();
+        reservationList.add(reservation);
+
+        given(customerRepository.findByEmail("jedi@lightside.com")).willReturn(customer);
+        given(reservationRepository.findByCustomerid(0)).willReturn(reservationList);
+        given(flightRepository.findByFlightid(0)).willReturn(flight);
+
+        List<ReservationFlightInfo> resultReservationFlightInfo = customerService.getPreviousReservationsRest("vader@sith.com");
+        List<ReservationFlightInfo> expectedReservationFlightInfo = null;
 
         assertThat(resultReservationFlightInfo).isEqualTo(expectedReservationFlightInfo);
     }
