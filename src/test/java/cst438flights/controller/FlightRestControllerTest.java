@@ -69,10 +69,6 @@ public class FlightRestControllerTest {
         // check the status
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         // convert json to an object
-//        Flight returnedF = json.parseObject(response.getContentAsString());
-//        List<Flight> returnFlight = new ArrayList<>();
-//        returnFlight.add(returnedF);
-//        List<Flight> returnFlight = json.parseObject(response.getContentAsString());
         ObjectMapper mapper = new ObjectMapper();
         List<Flight> returnFlight = mapper.readValue(responseString, new TypeReference<List<Flight>>() {});
 
@@ -83,6 +79,26 @@ public class FlightRestControllerTest {
         expectedFlight.add(expected_f2);
         // final assert test
         assertThat(returnFlight).isEqualTo(expectedFlight);
+    }
+
+    @Test
+    public void getFlightInfoArrivalNotFound() throws Exception {
+
+        Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        List<Flight> flight = new ArrayList<Flight>();
+        flight.add(f1);
+        flight.add(f2);
+        // give flight
+        given(flightService.getFlightInfoArrival("test_arrival_airport")).willReturn((flight));
+
+        String url = "/api/flights/arrival/";
+        // response from mvc
+        MockHttpServletResponse response = mvc.perform(get(url)).andReturn().getResponse();
+
+        // check the status
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -118,6 +134,24 @@ public class FlightRestControllerTest {
     }
 
     @Test
+    public void getFlightInfoDepartureNotFound() throws Exception {
+
+        Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        List<Flight> flight = new ArrayList<Flight>();
+        flight.add(f1);
+        flight.add(f2);
+        // give flight
+        given(flightService.getFlightInfoDeparture("test_departure_airport")).willReturn((flight));
+        // response from mvc
+        MockHttpServletResponse response = mvc.perform(get("/api/flights/departure/")).andReturn().getResponse();
+
+        // check the status
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     public void getAvailableFlightsInfoGET() throws Exception {
         Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
         Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
@@ -146,6 +180,24 @@ public class FlightRestControllerTest {
 
         // final assert test
         assertThat(returnFlight).isEqualTo(expectedFlight);
+    }
+
+    @Test
+    public void getAvailableFlightInfoGetNotFound() throws Exception {
+
+        Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        List<Flight> flight = new ArrayList<Flight>();
+        flight.add(f1);
+        flight.add(f2);
+        // give flight
+        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport", "")).willReturn((flight));
+        // response from mvc
+        MockHttpServletResponse response = mvc.perform(get("/api/flights/test_departure_airport/")).andReturn().getResponse();
+
+        // check the status
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -179,6 +231,25 @@ public class FlightRestControllerTest {
 
         // final assert test
         assertThat(returnFlight).isEqualTo(expectedFlight);
+    }
+
+    @Test
+    public void getAvailableFlightsDateInfoGETNotFound() throws Exception {
+
+        Flight f1 = new Flight(0, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+        Flight f2 = new Flight(101, "test_departure_airport", "test_arrival_airport", new Timestamp(2323223232L), 1, 1, 1, "on time");
+
+        System.out.println(new Timestamp(2323223232L));
+
+        List<Flight> flight = new ArrayList<Flight>();
+        flight.add(f1);
+        flight.add(f2);
+        // give flight
+        given(flightService.getAvailableFights("test_departure_airport", "test_arrival_airport", "01/27/1970")).willReturn((flight));
+        // response from mvc
+        MockHttpServletResponse response = mvc.perform(get("/api/flights2/test_departure_airport/")).andReturn().getResponse();
+        // check the status
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test

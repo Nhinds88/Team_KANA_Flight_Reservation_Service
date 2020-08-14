@@ -26,6 +26,8 @@ public class FlightRestController {
 
         List<Flight> arrivalFlights = flightService.getFlightInfoArrival(arrivalAirport);
 
+        System.out.println(arrivalFlights.get(0));
+
         if (arrivalFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
         } else {
@@ -38,6 +40,8 @@ public class FlightRestController {
             @PathVariable("departureAirport") String departureAirport) {
 
         List<Flight> departureFlights = flightService.getFlightInfoDeparture(departureAirport);
+
+        System.out.println(departureFlights.get(0));
 
         if (departureFlights == null) {
             return new ResponseEntity<List<Flight>>(HttpStatus.NOT_FOUND);
@@ -118,6 +122,8 @@ public class FlightRestController {
 
         Reservation reservation = flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
 
+        System.out.println(reservation);
+
         if (reservation == null) {
             return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
         } else {
@@ -135,6 +141,9 @@ public class FlightRestController {
             @PathVariable("flightID") int flightID
     ) {
         Reservation reservation = flightService.requestReservation(email, seatClass, numPassengers, prioBoarding, ORIGIN, flightID);
+
+        System.out.println(reservation);
+
         if (reservation == null) {
             return new ResponseEntity<Reservation>(HttpStatus.NOT_FOUND);
         } else {

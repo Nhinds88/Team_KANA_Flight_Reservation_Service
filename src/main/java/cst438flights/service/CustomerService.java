@@ -24,6 +24,10 @@ public class CustomerService {
 
         Customer customer = customerRepository.findByEmail(email);
 
+        if (customer == null) {
+            return null;
+        }
+
         List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
 
         System.out.println("reservation list size " + reservations.size());
@@ -49,6 +53,10 @@ public class CustomerService {
         System.out.println("Email " + email);
 
         Customer customer = customerRepository.findByEmail(email);
+
+        if (customer == null) {
+            return null;
+        }
 
         List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
 
@@ -85,6 +93,11 @@ public class CustomerService {
         System.out.println("Email " + email);
 
         Customer customer = customerRepository.findByEmail(email);
+
+        if (customer == null) {
+            return null;
+        }
+
 
         List<Reservation> reservations = reservationRepository.findByCustomerid(customer.getCustomerid());
 
