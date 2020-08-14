@@ -63,7 +63,7 @@ public class CustomerRestControllerTest {
 
         String email = "jedi@lightside.com";
 
-        MockHttpServletResponse response = mvc.perform(get("/api/previous_flights/email")).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/api/previous_flights/" + email)).andReturn().getResponse();
 
         String responseString = mvc.perform(get("/api/previous_flights/jedi@lightside.com")).andReturn().getResponse().getContentAsString();
 
@@ -115,11 +115,11 @@ public class CustomerRestControllerTest {
 
         given(customerService.getPreviousReservationsRest("jedi@lightside.com")).willReturn(reservationFlightInfoList);
 
-        MockHttpServletResponse response = mvc.perform(get("/api/previous_reservation/email")).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/api/previous_reservation/jedi@lightside.com")).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
-        String responseString = mvc.perform(get("/api/previous_reservation/email")).andReturn().getResponse().getContentAsString();
+        String responseString = mvc.perform(get("/api/previous_reservation/jedi@lightside.com")).andReturn().getResponse().getContentAsString();
 
         ObjectMapper mapper = new ObjectMapper();
         List<ReservationFlightInfo> resultReservationFlightInfo = mapper.readValue(responseString, new TypeReference<List<ReservationFlightInfo>>() {});
